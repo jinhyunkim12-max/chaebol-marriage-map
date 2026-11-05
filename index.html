@@ -382,9 +382,87 @@
     .path-summary { font-size:1.02rem; font-weight:700; color:var(--text); margin:0 0 6px; line-height:1.5; }
     .path-summary .hop { display:inline-block; background:var(--brand); color:var(--dark); border-radius:6px; padding:0 7px; margin:0 2px; }
     .badge.pef { background:#F1E8FD; color:#6B2FB3; }
+    .badge.foreign { background:#EEF0F3; color:#5C6168; border:1px solid #D0D3D8; }
+    .badge.public { background:#E8EEF6; color:#3A5A7A; }
+    .badge.ext-hint { background:#F7F8F9; color:#73777D; }
     .conflict-card.pef { box-shadow: inset 4px 0 0 #8B5CF6; }
+    .conflict-card.has-external { box-shadow: inset 4px 0 0 #9A9EA5; }
     tr.pef td:first-child { box-shadow: inset 4px 0 0 #8B5CF6; }
     .pef-toggle { display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; font-weight:600; color:var(--muted); cursor:pointer; }
+    .capital-legend { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; font-size:0.82rem; color:var(--muted); margin-bottom:12px; }
+    .capital-legend .shape { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:middle; border:1.5px solid #17191C; }
+    .capital-legend .shape.dom { border-radius:50%; background:#E9C934; }
+    .capital-legend .shape.ext { border-radius:2px; background:#EEF0F3; border-color:#9A9EA5; }
+    .capital-legend .shape.pub { border-radius:2px; background:#E8EEF6; border-color:#6B8CAE; border-style:dashed; }
+
+    /* ===== 거버넌스 ===== */
+    .gov-sub { display:flex; flex-wrap:wrap; gap:6px; }
+    .cycle-card {
+      background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:12px;
+    }
+    .cycle-card h3 { margin:0 0 6px; font-size:1rem; }
+    .cycle-card .meta { color:var(--muted); font-size:0.82rem; margin-bottom:12px; }
+    .cycle-flow {
+      display:flex; flex-wrap:wrap; align-items:center; gap:6px 0; row-gap:10px;
+    }
+    .cycle-node {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:88px; padding:10px 14px; border-radius:999px;
+      background:#17191C; color:#fff; font-weight:700; font-size:0.84rem;
+      border:2px solid var(--brand);
+    }
+    .cycle-node.soft { background:#fff; color:var(--text); border-color:var(--line-strong); }
+    .cycle-arrow {
+      display:inline-flex; align-items:center; padding:0 8px;
+      color:var(--muted); font-weight:700; font-size:0.95rem; letter-spacing:-0.02em;
+    }
+    .cycle-edge {
+      font-size:0.72rem; color:var(--faint); display:block; text-align:center; margin-top:2px;
+    }
+    .cycle-arrow-wrap { display:inline-flex; flex-direction:column; align-items:center; min-width:44px; }
+    .duel-card {
+      background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:12px;
+    }
+    .duel-card h3 { margin:0 0 4px; font-size:1rem; }
+    .duel-meta { color:var(--muted); font-size:0.82rem; margin-bottom:12px; }
+    .duel-labels {
+      display:flex; justify-content:space-between; gap:12px; font-size:0.82rem; font-weight:600; margin-bottom:6px;
+    }
+    .duel-labels .own { color:#2F5FBF; }
+    .duel-labels .ext { color:#C94B4B; text-align:right; }
+    .duel-bar {
+      position:relative; height:32px; border-radius:8px; overflow:hidden;
+      background:#EEF0F3; border:1px solid var(--line);
+    }
+    .duel-bar-inner { display:flex; width:100%; height:100%; }
+    .duel-bar .own-fill {
+      height:100%; background:linear-gradient(90deg,#2F5FBF,#3B6FD9); flex:0 0 auto;
+    }
+    .duel-bar .ext-fill {
+      height:100%; background:linear-gradient(90deg,#E06767,#C94B4B); flex:0 0 auto;
+    }
+    .duel-bar .mid-gap {
+      height:100%; flex:0 0 auto;
+      background:repeating-linear-gradient(-45deg,#F4F5F6,#F4F5F6 4px,#E3E5E8 4px,#E3E5E8 8px);
+    }
+    .duel-pct {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between;
+      padding:0 10px; pointer-events:none; font-size:0.8rem; font-weight:700; color:#fff;
+      text-shadow:0 1px 2px rgba(0,0,0,.4); font-variant-numeric:tabular-nums;
+    }
+    .duel-pct span.dim { color:var(--text); text-shadow:none; opacity:.8; }
+    .risk-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+    .risk-card {
+      background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px;
+      border-top:3px solid var(--warn);
+    }
+    .risk-card.high { border-top-color:var(--danger); }
+    .risk-card.mid { border-top-color:var(--warn); }
+    .risk-card.low { border-top-color:var(--accent-3); }
+    .risk-card h3 { margin:0 0 6px; font-size:0.98rem; }
+    .risk-card .amt { font-family:var(--font-display); font-size:1.15rem; font-weight:700; margin:8px 0; font-variant-numeric:tabular-nums; }
+    .risk-card .meta { color:var(--muted); font-size:0.82rem; }
+
     .share-toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--dark); color:#fff; padding:10px 16px; border-radius:10px; font-size:0.9rem; z-index:9999; box-shadow:var(--shadow-lg); }
   </style>
 
@@ -415,6 +493,7 @@
       <button class="pill" data-mode="network">혼맥</button>
       <button class="pill" data-mode="money">돈맥</button>
       <button class="pill" data-mode="school">학맥</button>
+      <button class="pill" data-mode="gov">거버넌스</button>
       <button class="pill" data-mode="conflict">갈등</button>
       <button class="pill" data-mode="transfer">손바뀜</button>
       <span class="pill ghost">F11 전체화면</span>
@@ -441,6 +520,7 @@
           <button type="button" data-jump="money"><strong>돈맥 네트워크</strong><span>JV·공동주주·투자</span></button>
           <button type="button" data-jump="ftc"><strong>기업집단</strong><span>공정위 102</span></button>
           <button type="button" data-jump="school"><strong>학맥</strong><span>학교·학과 동문</span></button>
+          <button type="button" data-jump="gov"><strong>거버넌스</strong><span>순환출자·표대결·승계</span></button>
           <button type="button" data-jump="conflict"><strong>분쟁·이혼</strong><span>경영권·혼인 해체</span></button>
           <button type="button" data-jump="transfer"><strong>손바뀜</strong><span>인수·소유권 이전</span></button>
           <button type="button" data-jump="lineage"><strong>계열 분리</strong><span>범○○ 분가</span></button>
@@ -631,6 +711,25 @@
       </div>
     </section>
 
+
+    <!-- 거버넌스 -->
+    <section id="view-gov" class="panel hidden">
+      <div class="panel-head">
+        <h2>거버넌스 · 순환출자·표대결·승계 리스크</h2>
+        <div class="toolbar gov-sub" style="margin:0" id="gov-sub-bar">
+          <button class="pill active" data-gov="cycle">순환출자</button>
+          <button class="pill" data-gov="proxy">행동주의·표대결</button>
+          <button class="pill" data-gov="succession">승계·지분 리스크</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="note" id="gov-note">국내 기업집단의 지배구조 이슈를 요약합니다. 지분·금액은 공시·보도 기준이며 시점마다 달라질 수 있습니다.</div>
+        <div id="gov-cycle"></div>
+        <div id="gov-proxy" class="hidden"></div>
+        <div id="gov-succession" class="hidden"></div>
+      </div>
+    </section>
+
     <!-- 가계도 -->
     <section id="view-tree" class="panel hidden">
       <div class="panel-head">
@@ -695,6 +794,14 @@
             <tbody id="politics-tbody"></tbody>
           </table>
         </div>
+        <h3 style="margin:20px 0 8px;font-size:0.95rem">언론·방송 혼맥 (원 미반영 · 표기만)</h3>
+        <div class="note">아나운서·앵커 출신 배우자, 또는 방송인家와의 사돈. 범현대가에 사례가 몰려 있습니다. 공개 보도 기준.</div>
+        <div class="table-scroll" style="max-height:280px">
+          <table>
+            <thead><tr><th>재벌가</th><th>당사자</th><th>언론·방송</th><th>세대</th><th>메모</th></tr></thead>
+            <tbody id="media-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -721,16 +828,22 @@
             <option value="all">전체 기업집단</option>
           </select>
           <input type="search" id="money-q" placeholder="집단·법인·출자자 검색" />
+          <label class="pef-toggle" title="꺼두면 국내 집단·정책금융 중심으로 보고, 해외·PEF 노드는 숨깁니다">
+            <input type="checkbox" id="money-ext" /> 해외 자본·PEF 포함
+          </label>
         </div>
       </div>
       <div class="panel-body">
-        <div class="note">혼맥=사람↔사람 · 학맥=학력 · <strong>돈맥=서로 다른 기업집단이 JV·공동주주·전략투자·공동인수로 연결</strong>. 그룹 <em>내부</em> 지배구조·순환출자는 여기에 넣지 않습니다. 지분율은 기준일 기준.</div>
+        <div class="note">혼맥=사람↔사람 · 학맥=학력 · <strong>돈맥=서로 다른 기업집단이 JV·공동주주·전략투자·공동인수로 연결</strong>. 그룹 <em>내부</em> 지배구조·순환출자는 여기에 넣지 않습니다. 지분율은 기준일 기준. 해외·PEF는 기본 숨김이며, 토글로 변수로 표시합니다.</div>
         <div class="conflict-grid" id="money-stats" style="margin-bottom:14px"></div>
-        <div class="note" style="margin-bottom:12px">
-          <span class="rel-dot rel-jv"></span>공동출자·JV
-          <span style="margin-left:10px"><span class="rel-dot rel-cohold"></span>공동주주</span>
-          <span style="margin-left:10px"><span class="rel-dot rel-strategic"></span>전략적 지분투자</span>
-          <span style="margin-left:10px"><span class="rel-dot rel-consortium"></span>공동 인수·컨소시엄</span>
+        <div class="capital-legend">
+          <span><span class="shape dom"></span>국내 기업집단</span>
+          <span><span class="shape ext"></span>해외 파트너·PEF</span>
+          <span><span class="shape pub"></span>정책금융</span>
+          <span><span class="rel-dot rel-jv"></span>JV</span>
+          <span><span class="rel-dot rel-cohold"></span>공동주주</span>
+          <span><span class="rel-dot rel-strategic"></span>전략투자</span>
+          <span><span class="rel-dot rel-consortium"></span>공동인수</span>
         </div>
         <div class="money-layout">
           <div class="split-main">
@@ -1005,7 +1118,7 @@ const MARRIAGES = [
   { a:"kumho-chem", b:"lg", people:"박家 ↔ 구·허家", confidence:"vague", generation:"3세", detail:"금호–범LG" },
   { a:"samsung", b:"daesang", people:"이재용 ↔ 임세령", generation:"3세", detail:"과거 혼인(이혼)", confidence:"named", status:"divorced" },
   { a:"hanjin", b:"lotte", people:"조수호 ↔ 최은영", generation:"2세", detail:"한진해운–롯데(신정숙 딸)" },
-  { a:"kcc", b:"lotte", people:"정몽익 ↔ 최은정", generation:"2세", detail:"KCC–롯데(신정숙 딸)" },
+  { a:"kcc", b:"lotte", people:"정몽익 ↔ 최은정", generation:"2세", detail:"KCC글라스–롯데(신정숙 딸). 2022.9 이혼 조정 성립", confidence:"named", status:"divorced" },
   { a:"nongshim", b:"db", people:"신동윤 ↔ 김희선", generation:"3세", detail:"농심–DB(김준기 여동생)" },
   { a:"lotte", b:"taekwang", people:"범롯데 ↔ 태광", confidence:"vague", generation:"1~2세", detail:"범롯데 형제 혼맥" },
   { a:"lotte", b:"amore", people:"범롯데 ↔ 아모레", confidence:"vague", generation:"1~2세", detail:"범롯데 남매 혼맥" },
@@ -1051,6 +1164,11 @@ function marriagesForPerson(name) {
 function politicsForPerson(name) {
   return POLITICS_TIES.filter(p => (p.people || "").includes(name));
 }
+function mediaForPerson(name) {
+  return (typeof MEDIA_TIES !== "undefined" ? MEDIA_TIES : []).filter(p =>
+    (p.people || "").includes(name) || (p.media || "").includes(name) || (p.note || "").includes(name)
+  );
+}
 
 /** 정·관계 혼맥 — 네트워크 원에는 미반영, 표기만 */
 const POLITICS_TIES = [
@@ -1076,6 +1194,15 @@ const POLITICS_TIES = [
   { group:"효성 매개", people:"노재헌 ↔ 신정화", politics:"노태우家 · 효성 처가", gen:"3세", note:"최태원 처남. 이혼" },
   { group:"한일 매개", people:"김복동家 ↔ 한일", politics:"노태우 처가(김옥숙 오빠)", gen:"2세", note:"SK–한일 줄사돈 매개" },
   { group:"영풍", people:"장家 ↔ 정·김家", politics:"정일권家·김세련 전 재무장관家", gen:"2세", note:"코오롱과도 매개" },
+];
+
+/** 언론·방송 혼맥 — 아나운서·앵커家. 원 미반영, 표기만 */
+const MEDIA_TIES = [
+  { group:"HL", people:"정몽원 ↔ 홍인화", media:"홍인화 · 전 TBC(동양방송) 아나운서", gen:"2세", note:"HL 회장 배우자. 방송인 출신 오너 부인" },
+  { group:"HL", people:"정지수 ↔ 강인찬", media:"백지연 전 MBC 앵커 외아들", gen:"3세", note:"2023.6 혼인. 정몽원 차녀–백지연家 사돈" },
+  { group:"현대(정몽우家)", people:"정대선 ↔ 노현정", media:"노현정 · 전 KBS 아나운서", gen:"3세", note:"2006.8 혼인. 정몽우 3남 · 범현대" },
+  { group:"현대(정몽필家)", people:"정몽필 ↔ 이양자", media:"이양자 · 아나운서 출신", gen:"2세", note:"故 정몽필(정주영 장남) 배우자. 양측 타계" },
+  { group:"삼성", people:"이건희 ↔ 홍라희", media:"홍진기·중앙일보家 (언론 자본)", gen:"2세", note:"아나운서가 아닌 언론사 오너家. 정·관·언론 교차" },
 ];
 
 const KINSHIP = [
@@ -1162,9 +1289,11 @@ const TREES = {
       ]},
       { id:"mg", name:"정몽규", group:"HDC" },
       { id:"mjin", name:"정몽진", group:"KCC", children:[
-        { note:"동생 정몽익 × 최은정(롯데 신정숙 딸)", id:"mi", name:"정몽익", group:"KCC", spouse:"최은정", spouseLink:"롯데" }
+        { note:"동생 정몽익 × 최은정(롯데·이혼 2022)", id:"mi", name:"정몽익", group:"KCC", spouse:"최은정", spouseLink:"롯데(이혼)" }
       ]},
-      { id:"mw", name:"정몽원", group:"HL" },
+      { id:"mw", name:"정몽원", group:"HL", spouse:"홍인화", spouseLink:"전 TBC 아나운서", children:[
+        { id:"jjs", name:"정지수", spouse:"강인찬", spouseLink:"백지연家", note:"2023 혼인" }
+      ]},
       { id:"my", name:"정몽윤", group:"현대해상" },
       { id:"dept", name:"현대백화점 계열", group:"현대백화점", note:"정지선 회장 (범현대)" }
     ]}
@@ -1187,7 +1316,7 @@ const TREES = {
         ]},
         { id:"sjs", name:"신정숙", role:"여동생", children:[
           { id:"cey", name:"최은영", spouse:"조수호", spouseLink:"한진해운", note:"롯데–한진" },
-          { id:"cej", name:"최은정", spouse:"정몽익", spouseLink:"KCC", note:"롯데–범현대" }
+          { id:"cej", name:"최은정", spouse:"정몽익", spouseLink:"KCC", note:"롯데–범현대 · 2022 이혼" }
         ]}
       ]}
     ]}
@@ -1370,7 +1499,9 @@ const GENERATIONS = [
   { gen:2, name:"정몽준", group:"HD현대", role:"아산재단 이사장 · HD현대 동일인", status:"support", born:"1951", note:"지분·재단 · 경영은 정기선" },
   { gen:2, name:"정몽규", group:"HDC", role:"HDC그룹 회장", status:"active", born:"", note:"건설·개발" },
   { gen:2, name:"정몽진", group:"KCC", role:"KCC 회장", status:"active", born:"", note:"소재" },
-  { gen:2, name:"정몽원", group:"HL", role:"HL홀딩스 회장", status:"active", born:"", note:"자동차부품" },
+  { gen:2, name:"정몽익", group:"KCC글라스", role:"KCC글라스 회장", status:"active", born:"", note:"정상영 차남 · 최은정(롯데)과 2022 이혼", odd:true, oddTag:"이혼·재산분할" },
+  { gen:2, name:"정몽원", group:"HL", role:"HL홀딩스 회장", status:"active", born:"", note:"자동차부품 · 배우자 홍인화(전 TBC 아나운서)" },
+  { gen:3, name:"정지수", group:"HL", role:"HL 미국법인", status:"active", born:"", note:"정몽원 차녀 · 2023 백지연 아들과 혼인" },
   { gen:3, name:"정의선", group:"현대차", role:"현대자동차그룹 회장", status:"active", born:"1970", note:"전동화·로보틱스·수소 투자" },
   { gen:3, name:"정기선", group:"HD현대", role:"HD현대 회장", status:"active", born:"1982", note:"2025~26 회장 · 조선·친환경선 · 지분 승계 진행" },
   { gen:3, name:"정명이", group:"현대차", role:"현대커머셜 사장", status:"active", born:"", note:"금융 · 아들 정준×리디아 고" },
@@ -1662,6 +1793,48 @@ const MONEY_TYPE_LABEL = {
   strategic:"전략적 지분투자",
   consortium:"공동 인수·컨소시엄",
 };
+/** 공정위 102 밖·특수 자본. 미등록 groupId는 국내 집단으로 간주 */
+const CAPITAL_ROLE = {
+  alibaba: "foreign",
+  delta: "foreign",
+  tencent: "foreign",
+  geely: "foreign",
+  huayou: "foreign",
+  kdb: "public",
+};
+const CAPITAL_ROLE_LABEL = {
+  domestic: "국내 집단",
+  foreign: "해외 파트너",
+  public: "정책금융",
+  pef: "PEF·행동주의",
+};
+function capitalRoleOf(p) {
+  if (!p) return "domestic";
+  if (p.capitalRole) return p.capitalRole;
+  if (p.investorType === "public") return "public";
+  if (p.investorType === "pef" || p.investorType === "pe") return "pef";
+  if (CAPITAL_ROLE[p.groupId]) return CAPITAL_ROLE[p.groupId];
+  return "domestic";
+}
+function isExternalCapital(role) {
+  return role === "foreign" || role === "pef";
+}
+function moneyShowExternal() {
+  const el = document.getElementById("money-ext");
+  return !!(el && el.checked);
+}
+function moneyHasExternal(m) {
+  return (m.participants || []).some(p => isExternalCapital(capitalRoleOf(p)));
+}
+function moneyVisibleParticipants(m) {
+  const show = moneyShowExternal();
+  return (m.participants || []).filter(p => show || !isExternalCapital(capitalRoleOf(p)));
+}
+function capitalBadgeHtml(role) {
+  if (!role || role === "domestic") return "";
+  const cls = role === "foreign" ? "foreign" : role === "public" ? "public" : "pef";
+  return `<span class="badge ${cls}">${esc(CAPITAL_ROLE_LABEL[role] || role)}</span>`;
+}
 const MONEY_TIES = [
   {
     id:"jv-lgu-boltup-kakao",
@@ -1878,6 +2051,11 @@ const DIVORCES = [
     note:"이혼으로 강원산업–전두환 연 단절.",
     after:"합의 이혼으로 혼맥 종료. 강원산업–전두환家 사돈 연결은 복구되지 않음. 양측 후속 재혼은 본 목록 범위 밖.",
     detail:"전두환 차남 전재용과 박태준 딸 박경아의 혼인이 성격 차로 합의 이혼하며 혼맥이 끊김." },
+  { who:"정몽익", group:"KCC글라스", spouse:"최은정", spouseFrom:"롯데(신격호 외조카·신정숙 딸)", when:"1990 혼인 · 2013 1차 소송(패소) · 2019 재소 · 2022.9 조정 이혼",
+    status:"closed",
+    note:"두 번째 소송 끝 이혼 조정 성립. 재산분할액 비공개(최씨 측 약 1100억원 청구 보도).",
+    after:"법적 이혼 성립. 분할 세부·후속 혼인 여부는 비공개. KCC–롯데 사돈 혼맥은 해체.",
+    detail:"정상영 차남 정몽익 KCC글라스 회장과 롯데가 인척 최은정의 혼인. 2013년 1차 이혼 소송은 대법 패소 후, 2019년 재소·반소 끝에 2022년 9월 서울가정법원 조정으로 이혼." },
 ];
 
 /** 손바뀜: chaebol|pe|split */
@@ -2003,10 +2181,355 @@ const HAKMAEK = [
   { name:"이원주", group:"삼성", high:"", univ:"", abroad:"", schools:[], note:"이재용 장녀 · 4세" },
 ];
 
+
+/** 거버넌스: 순환출자·표대결·승계 (공개 보도·공시 요약. 수치는 시점 변동) */
+let govSub = "cycle";
+
+const CIRCULAR_CHAINS = [
+  {
+    id: "hyundai-mobis-loop",
+    group: "현대자동차",
+    title: "현대차그룹 순환출자 고리",
+    status: "완화·잔존",
+    asOf: "2024~2026",
+    summary: "현대모비스–현대차–기아로 이어지는 대표적 순환 고리. 지배구조 개편 시도 이후에도 핵심 축으로 거론.",
+    nodes: [
+      { name: "현대모비스", stakeToNext: "~21%대" },
+      { name: "현대자동차", stakeToNext: "~33%대" },
+      { name: "기아", stakeToNext: "~17%대" },
+      { name: "현대모비스", stakeToNext: null },
+    ],
+    note: "지분율은 공시·보도 구간 요약. 시점·자기주식·우호주 포함 여부에 따라 달라짐.",
+    source: "공정위·공시·언론 요약",
+  },
+  {
+    id: "samsung-life-loop",
+    group: "삼성",
+    title: "삼성 생명·물산 중심 출자 고리",
+    status: "개편 진행",
+    asOf: "2024~2026",
+    summary: "삼성물산→삼성생명→삼성전자 등으로 이어지는 출자 사슬. 금융·지주성 논쟁과 맞물림.",
+    nodes: [
+      { name: "삼성물산", stakeToNext: "주요주주" },
+      { name: "삼성생명", stakeToNext: "약 8%대" },
+      { name: "삼성전자", stakeToNext: null },
+    ],
+    note: "단순 삼각 순환과 다른 지주형 출자 사슬. 보험업법·금산분리 이슈와 함께 봐야 함.",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "lotte-hist-loop",
+    group: "롯데",
+    title: "롯데 순환출자(과거 다층 고리)",
+    status: "해소·축소",
+    asOf: "2010년대~",
+    summary: "롯데제과·쇼핑·케미칼 등 다층 순환이 형제의 난·지주 전환 과정에서 상당 부분 해소·재편.",
+    nodes: [
+      { name: "롯데지주", stakeToNext: "계열 출자" },
+      { name: "롯데케미칼 등", stakeToNext: "상호·상하" },
+      { name: "주요 계열", stakeToNext: null },
+    ],
+    note: "현재는 지주 중심 구조로 단순화. 과거 순환 사례로 수록.",
+    source: "공정위·언론 요약",
+  },
+  {
+    id: "youngpoong-kz",
+    group: "영풍·고려아연",
+    title: "영풍 ↔ 고려아연 상호지분",
+    status: "분쟁·유지",
+    asOf: "2025~2026",
+    summary: "장기간 상호 지분. 순환 삼각보다는 양자 상호출자에 가깝지만 지배권 다툼의 핵심 고리.",
+    nodes: [
+      { name: "영풍", stakeToNext: "~25%대" },
+      { name: "고려아연", stakeToNext: "~10%+" },
+      { name: "영풍", stakeToNext: null },
+    ],
+    note: "돈맥 공동주주 카드와 동일 사안. 지분율 시점 변동.",
+    source: "공시·언론 · 출처 확인 필요(시점)",
+  },
+];
+
+const PROXY_BATTLES = [
+  {
+    id: "hanjinkal-2019",
+    company: "한진칼",
+    group: "한진",
+    title: "한진칼 경영권 분쟁 (3자 연합)",
+    when: "2019~2021",
+    status: "closed",
+    ownerLabel: "조원태·특수관계인",
+    ownerPct: 21,
+    challengerLabel: "KCGI·반도·조현아 연합",
+    challengerPct: 40,
+    note: "연합 지분은 보도 합산 구간. 산은 등 우군으로 오너 측 방어.",
+    outcome: "조원태 측 방어 성공",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "hanjinkal-hoban",
+    company: "한진칼",
+    group: "한진·호반",
+    title: "한진칼 지분 구도 (호반 진입 이후)",
+    when: "2022~2026",
+    status: "open",
+    ownerLabel: "조원태·특수관계인",
+    ownerPct: 21,
+    challengerLabel: "호반 계열",
+    challengerPct: 20,
+    note: "2대주주 호반과 오너 일가의 지분 근접. 델타·산은 등 기타 주주는 별도.",
+    outcome: "지분 균형·경영권 변수 지속",
+    source: "공시·언론 요약 · 출처 확인 필요(시점)",
+  },
+  {
+    id: "kumho-nephew",
+    company: "금호석유화학",
+    group: "금호석유화학",
+    title: "금호석화 ‘조카의 난’",
+    when: "2021~",
+    status: "open",
+    ownerLabel: "박찬구 회장 측",
+    ownerPct: 23,
+    challengerLabel: "박철완·행동주의 연대",
+    challengerPct: 15,
+    note: "자사주·우호주 포함 여부에 따라 실효 의결권은 달라짐. 수치는 보도 요약.",
+    outcome: "진행·미종결",
+    source: "언론·공시 요약 · 출처 확인 필요",
+  },
+  {
+    id: "hanmi-2024",
+    company: "한미사이언스·한미약품",
+    group: "한미약품",
+    title: "한미 경영권·통합 갈등",
+    when: "2024~2026",
+    status: "open",
+    ownerLabel: "송영숙·임주현 측",
+    ownerPct: 34,
+    challengerLabel: "임종윤·임종훈 측",
+    challengerPct: 28,
+    note: "가족 내 지분·우호 지분 합산 보도 기준. OCI 통합안 등 쟁점과 연동.",
+    outcome: "진행·연합 재편",
+    source: "언론·공시 요약 · 출처 확인 필요",
+  },
+  {
+    id: "sm-kakao-hybe",
+    company: "SM엔터테인먼트",
+    group: "카카오·HYBE",
+    title: "SM 경영권·공개매수 대치",
+    when: "2023",
+    status: "closed",
+    ownerLabel: "카카오 측(최종)",
+    ownerPct: 40,
+    challengerLabel: "HYBE·관련 지분",
+    challengerPct: 26,
+    note: "공개매수 국면의 보도 합산. 최종 지배는 카카오 쪽으로 정리.",
+    outcome: "카카오 측 확보",
+    source: "공시·언론 요약",
+  },
+];
+
+const SUCCESSION_RISKS = [
+  {
+    id: "hyundai-inher",
+    group: "현대자동차",
+    person: "정의선",
+    level: "high",
+    title: "현대차그룹 승계·상속 재원",
+    riskType: "상속세 재원",
+    amountLabel: "100000억원",
+    amountNote: "보도상 수조~수십조원대 상속세 규모 추정이 오가며, 구체 확정액은 시점·평가에 따름",
+    detail: "핵심 계열 지분 승계 시 재원 마련·지분 희석·배당·처분 이슈가 반복 거론.",
+    source: "언론 요약 · 출처 확인 필요(추정 금지 원칙 — 확정 공시액 아님)",
+  },
+  {
+    id: "samsung-pledge",
+    group: "삼성",
+    person: "이재용",
+    level: "mid",
+    title: "삼성 지분·담보·상속 후속",
+    riskType: "지분·담보",
+    amountLabel: "12조원",
+    amountNote: "과거 상속세 분할납부·주식담보 관련 보도 규모(시점 변동)",
+    detail: "상속세 납부 이후에도 지분 안정성·계열 출자 고리·금융 규제와 연동된 리스크가 남아 있음.",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "lg-succession",
+    group: "LG",
+    person: "구광모",
+    level: "mid",
+    title: "LG 지분 승계 완성도",
+    riskType: "승계 지분",
+    amountLabel: "—",
+    amountNote: "구체 상속세액은 미확정·비공개 구간 다수",
+    detail: "구본무 회장 타계 후 구광모 체제로 전환. 특수관계인 지분·계열 출자로 지배력 유지.",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "sk-divorce-stake",
+    group: "SK",
+    person: "최태원",
+    level: "high",
+    title: "SK 지분·이혼 재산분할 후폭풍",
+    riskType: "지분 변동",
+    amountLabel: "2조원",
+    amountNote: "이혼 확정·재산분할 관련 보도에서 거론된 규모대(확정 공시와 다를 수 있음)",
+    detail: "최태원–노소영 이혼 확정 이후 지분·지배구조 변수. 승계·우호지분 재편과 연결.",
+    source: "판결·언론 요약 · 출처 확인 필요",
+  },
+  {
+    id: "lotte-japan",
+    group: "롯데",
+    person: "신동빈",
+    level: "mid",
+    title: "롯데 한·일 지배구조·승계",
+    riskType: "지배구조",
+    amountLabel: "—",
+    amountNote: "금액 단일 지표로 환산하기 어려움",
+    detail: "형제의 난 이후 지주 전환. 일본 롯데홀딩스와의 연결 고리가 승계·지배의 상수.",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "hanjin-stake",
+    group: "한진",
+    person: "조원태",
+    level: "high",
+    title: "한진칼 지분 근접·담보 이슈",
+    riskType: "경영권·담보",
+    amountLabel: "—",
+    amountNote: "호반 등과 지분율 근접. 담보·우호주 보도는 시점별",
+    detail: "오너 일가와 2대주주 호반의 지분이 근접해 표대결·우호주 확보가 상시 리스크.",
+    source: "공시·언론 요약",
+  },
+  {
+    id: "doosan-restruct",
+    group: "두산",
+    person: "박정원",
+    level: "mid",
+    title: "두산 재무·구조조정 후 지배력",
+    riskType: "재무·지분",
+    amountLabel: "3조원",
+    amountNote: "과거 유동성·매각 국면에서 거론된 규모대(요약)",
+    detail: "계열 매각·유증 이후에도 지배구조·승계 라인의 안정성이 과제.",
+    source: "공시·언론 요약 · 출처 확인 필요",
+  },
+  {
+    id: "cj-inher",
+    group: "CJ",
+    person: "이재현",
+    level: "mid",
+    title: "CJ 승계·4세 지분",
+    riskType: "승계",
+    amountLabel: "—",
+    amountNote: "상속·증여 구체액 미확정 공시 다수",
+    detail: "이재현 회장 체제에서 이선호 등 4세로의 지분·경영 이양 속도가 관전 포인트.",
+    source: "언론 요약",
+  },
+];
+
+function setGovSub(sub) {
+  govSub = sub;
+  document.querySelectorAll("#gov-sub-bar [data-gov]").forEach(b => b.classList.toggle("active", b.dataset.gov === sub));
+  document.getElementById("gov-cycle").classList.toggle("hidden", sub !== "cycle");
+  document.getElementById("gov-proxy").classList.toggle("hidden", sub !== "proxy");
+  document.getElementById("gov-succession").classList.toggle("hidden", sub !== "succession");
+  const note = document.getElementById("gov-note");
+  if (note) {
+    note.textContent = {
+      cycle: "순환·상호 출자 고리를 노드 플로우로 표시합니다. 화살표 위 숫자는 다음 노드로의 지분(보도·공시 구간).",
+      proxy: "오너 일가(좌·청) vs 외부·행동주의(우·적) 지분율을 맞물림 바로 비교합니다. 합이 100%가 아닐 수 있습니다(기타주주).",
+      succession: "상속세 재원·주식담보·지분 변동 리스크를 카드로 정리합니다. 추정액은 확정 공시가 아니면 별도 표기.",
+    }[sub] || note.textContent;
+  }
+}
+
+function renderGovCycle() {
+  const el = document.getElementById("gov-cycle");
+  if (!el) return;
+  el.innerHTML = CIRCULAR_CHAINS.map(c => {
+    const parts = [];
+    c.nodes.forEach((n, i) => {
+      const soft = i === c.nodes.length - 1 && c.nodes[0].name === n.name;
+      parts.push(`<span class="cycle-node${soft ? " soft" : ""}">${esc(n.name)}</span>`);
+      if (i < c.nodes.length - 1) {
+        parts.push(`<span class="cycle-arrow-wrap"><span class="cycle-edge">${esc(n.stakeToNext || "")}</span><span class="cycle-arrow">➔</span></span>`);
+      }
+    });
+    return `<article class="cycle-card">
+      <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <h3>${esc(c.title)}</h3>
+        <span><span class="badge corp">${esc(c.group)}</span> <span class="badge">${esc(c.status)}</span></span>
+      </div>
+      <div class="meta">기준 ${esc(c.asOf)} · ${esc(c.summary)}</div>
+      <div class="cycle-flow">${parts.join("")}</div>
+      <div class="src-line">${esc(c.note)} · ${esc(c.source)}</div>
+    </article>`;
+  }).join("");
+}
+
+function renderGovProxy() {
+  const el = document.getElementById("gov-proxy");
+  if (!el) return;
+  el.innerHTML = PROXY_BATTLES.map(b => {
+    const o = Math.max(0, Math.min(100, b.ownerPct));
+    const x = Math.max(0, Math.min(100, b.challengerPct));
+    const mid = Math.max(0, 100 - o - x);
+    const st = b.status === "open" ? "open" : "closed";
+    return `<article class="duel-card">
+      <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <h3>${esc(b.title)}</h3>
+        <span><span class="badge ${st}">${st === "open" ? "진행" : "종결"}</span> <span class="badge person">${esc(b.company)}</span></span>
+      </div>
+      <div class="duel-meta">${esc(b.when)} · ${esc(b.group)} · ${esc(b.outcome || "")}</div>
+      <div class="duel-labels">
+        <div class="own">${esc(b.ownerLabel)}</div>
+        <div class="ext">${esc(b.challengerLabel)}</div>
+      </div>
+      <div class="duel-bar" role="img" aria-label="오너 ${o}% 대 외부 ${x}%">
+        <div class="duel-bar-inner">
+          <div class="own-fill" style="width:${o}%"></div>
+          <div class="mid-gap" style="width:${mid}%"></div>
+          <div class="ext-fill" style="width:${x}%"></div>
+        </div>
+        <div class="duel-pct">
+          <span>${o}%</span>
+          <span class="${mid > 12 ? "dim" : ""}">${mid > 0 ? "기타 "+mid+"%" : ""}</span>
+          <span>${x}%</span>
+        </div>
+      </div>
+      <div class="src-line">${esc(b.note)} · ${esc(b.source)}</div>
+    </article>`;
+  }).join("");
+}
+
+function renderGovSuccession() {
+  const el = document.getElementById("gov-succession");
+  if (!el) return;
+  el.innerHTML = `<div class="risk-grid">` + SUCCESSION_RISKS.map(r => `
+    <article class="risk-card ${esc(r.level)}">
+      <div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap">
+        <h3>${esc(r.title)}</h3>
+        <span class="badge ${r.level === "high" ? "open" : "person"}">${esc(r.riskType)}</span>
+      </div>
+      <div class="meta">${esc(r.group)} · ${esc(r.person)}</div>
+      <div class="amt">${esc(r.amountLabel)}</div>
+      <div class="meta">${esc(r.amountNote)}</div>
+      <div class="result" style="margin-top:8px;border:none;padding:0;-webkit-line-clamp:4">${esc(r.detail)}</div>
+      <div class="src-line">${esc(r.source)}</div>
+    </article>`).join("") + `</div>`;
+}
+
+function renderGov() {
+  renderGovCycle();
+  renderGovProxy();
+  renderGovSuccession();
+  setGovSub(govSub);
+}
+
+
 function setMode(m) {
   mode = m;
   document.querySelectorAll("#mode-bar [data-mode]").forEach(b => b.classList.toggle("active", b.dataset.mode === m));
-  ["home","ftc","lineage","gen","tree","network","money","school","conflict","transfer"].forEach(id => {
+  ["home","ftc","lineage","gen","tree","network","money","school","gov","conflict","transfer"].forEach(id => {
     const el = document.getElementById("view-" + id);
     if (el) el.classList.toggle("hidden", m !== id);
   });
@@ -2018,8 +2541,24 @@ function setMode(m) {
   if (m === "network") drawNetwork();
   if (m === "money") renderMoney();
   if (m === "school") renderSchool();
+  if (m === "gov") renderGov();
   if (m === "conflict") renderConflict();
   if (m === "transfer") renderTransfer();
+}
+
+/** 금액 표기: 쉼표·숫자-단위 공백 없이. 예) 1000억원, 5.7조원 */
+function formatMoneyKR(value, unit) {
+  if (value == null || value === "") return "—";
+  let raw = String(value).trim();
+  // 이미 단위가 붙은 문자열이면 쉼표·불필요 공백만 정리
+  if (/[억조]/.test(raw) || /원/.test(raw)) {
+    return raw.replace(/,/g, "").replace(/\s+/g, "").replace(/억\s*원/g, "억원").replace(/조\s*원/g, "조원");
+  }
+  const num = typeof value === "number" ? value : parseFloat(raw.replace(/,/g, ""));
+  if (Number.isNaN(num)) return raw.replace(/,/g, "").replace(/\s+/g, "");
+  const u = unit || "억";
+  const s = Number.isInteger(num) ? String(num) : String(num);
+  return s + u + "원";
 }
 
 function esc(s) {
@@ -2051,6 +2590,8 @@ function renderHome() {
     "신규 11곳: 라인·한국교직원공제회·웅진·쉴더스·대명화학·토스·한국콜마·희성·오리온·QCP그룹·일진글로벌",
     "지정 제외: 영원(자산 5조 미만)",
     "아워홈 → 한화는 손바뀜(돈맥 제외) · 돈맥은 JV·공동주주·전략투자만",
+    "거버넌스 탭: 순환출자·행동주의 표대결·승계 리스크 신설",
+    "정몽익–최은정 이혼(2022) 반영 · 언론·방송 혼맥 표 추가(HL·백지연·노현정 등)",
   ].map(x => `<li>${esc(x)}</li>`).join("");
 }
 
@@ -2083,11 +2624,17 @@ function filteredMoney() {
   const st = document.getElementById("money-status").value;
   const g = document.getElementById("money-group").value;
   const q = (document.getElementById("money-q").value || "").trim();
+  const showExt = moneyShowExternal();
   return MONEY_TIES.map((m, i) => ({ m, i })).filter(({ m }) => {
     if (type !== "all" && m.relationType !== type) return false;
     if (st !== "all" && m.status !== st) return false;
     if (g !== "all" && !(m.participants||[]).some(p => p.groupName === g)) return false;
     if (q && !moneyBlob(m).includes(q)) return false;
+    // 해외·PEF 숨김: 국내·정책금융 참여자가 하나도 없으면 카드도 숨김
+    if (!showExt) {
+      const core = (m.participants || []).filter(p => !isExternalCapital(capitalRoleOf(p)));
+      if (!core.length) return false;
+    }
     return true;
   });
 }
@@ -2110,22 +2657,35 @@ function renderMoneyDetail(m) {
     return;
   }
   const stLabel = { active:"유지", disputed:"분쟁·소송", reduced:"지분 축소", exited:"매각·청산" }[m.status] || m.status;
+  const extNote = moneyHasExternal(m)
+    ? (moneyShowExternal() ? " · 해외·PEF 표시 중" : " · 해외·PEF 숨김(토글로 표시)")
+    : "";
   document.getElementById("money-detail-title").textContent = m.title;
   document.getElementById("money-detail-meta").textContent =
-    `${MONEY_TYPE_LABEL[m.relationType]||m.relationType} · ${stLabel} · 대상 ${m.targetCompany||"—"} · 기준일 ${m.asOf||"—"} · 설립 ${m.establishedAt||"—"}`;
+    `${MONEY_TYPE_LABEL[m.relationType]||m.relationType} · ${stLabel} · 대상 ${m.targetCompany||"—"} · 기준일 ${m.asOf||"—"} · 설립 ${m.establishedAt||"—"}${extNote}`;
 
-  const parts = m.participants || [];
+  const parts = moneyVisibleParticipants(m);
   const known = parts.filter(p => typeof p.stake === "number");
   const sumKnown = known.reduce((a,p)=>a+p.stake, 0);
+  const hiddenExt = !moneyShowExternal() ? (m.participants || []).filter(p => isExternalCapital(capitalRoleOf(p))) : [];
   document.getElementById("money-stake-bars").innerHTML = parts.map(p => {
+    const role = capitalRoleOf(p);
     const w = typeof p.stake === "number" ? Math.min(100, p.stake) : (p.stakeLabel && p.stakeLabel.includes("%") ? 20 : 8);
     return `<div class="stake-bar-row">
-      <div>${esc(p.groupName)}<br><span class="meta">${esc(p.investorName)}</span></div>
+      <div>${esc(p.groupName)} ${capitalBadgeHtml(role)}<br><span class="meta">${esc(p.investorName)}</span></div>
       <div class="stake-bar-track"><div class="stake-bar-fill" style="width:${w}%"></div></div>
       <div>${esc(p.stakeLabel || (p.stake!=null?p.stake+"%":"—"))}</div>
     </div>`;
-  }).join("") + (sumKnown > 0 && sumKnown < 99.5
+  }).join("") + (hiddenExt.length
+    ? `<div class="meta" style="margin-top:8px">숨긴 외부 자본: ${hiddenExt.map(p => esc(p.groupName)).join(" · ")} · <label class="pef-toggle" style="display:inline"><input type="checkbox" id="money-ext-inline" /> 표시</label></div>`
+    : "") + (sumKnown > 0 && sumKnown < 99.5
     ? `<div class="meta">확인된 수치 합 ${sumKnown.toFixed(2)}% · 나머지는 미확인·기타주주(임의 채움 없음)</div>` : "");
+
+  const inline = document.getElementById("money-ext-inline");
+  if (inline) inline.onchange = () => {
+    document.getElementById("money-ext").checked = inline.checked;
+    renderMoney();
+  };
 
   const lines = [];
   lines.push(m.summary || "");
@@ -2134,8 +2694,11 @@ function renderMoneyDetail(m) {
   if (m.ceo) lines.push(`대표: ${m.ceo}`);
   if (m.board) lines.push(`경영진 구성: ${m.board}`);
   lines.push("", "【참여자】");
-  parts.forEach(p => {
-    lines.push(`· ${p.groupName} / ${p.investorName} (${p.investorType||"—"}) · ${p.stakeLabel||"—"} · ${p.role||""}${p.amount?" · "+p.amount:""}`);
+  (m.participants || []).forEach(p => {
+    const role = capitalRoleOf(p);
+    const tag = role === "domestic" ? "" : ` [${CAPITAL_ROLE_LABEL[role]}]`;
+    const hidden = !moneyShowExternal() && isExternalCapital(role) ? " (네트워크에서 숨김)" : "";
+    lines.push(`· ${p.groupName}${tag} / ${p.investorName} (${p.investorType||"—"}) · ${p.stakeLabel||"—"} · ${p.role||""}${p.amount?" · "+p.amount:""}${hidden}`);
   });
   document.getElementById("money-detail-body").textContent = lines.filter(Boolean).join("\n");
 
@@ -2147,19 +2710,40 @@ function renderMoneyDetail(m) {
   }).join("") || `<span class="chip" style="cursor:default">출처 확인 필요</span>`;
 }
 
+function moneyNodeStyle(role) {
+  if (role === "foreign" || role === "pef") {
+    return { rx: 2, fill: role === "pef" ? "#F1E8FD" : "#EEF0F3", stroke: role === "pef" ? "#8B5CF6" : "#9A9EA5", dash: "", text: "#5C6168" };
+  }
+  if (role === "public") {
+    return { rx: 2, fill: "#E8EEF6", stroke: "#6B8CAE", dash: "3 2", text: "#3A5A7A" };
+  }
+  return { rx: 14, fill: "#FFFFFF", stroke: "#17191C", dash: "", text: "#17191C" };
+}
+
 function renderMoneyNetwork(rows) {
   const svg = document.getElementById("money-svg");
   if (!svg) return;
   const TYPE_COLOR = { jv:"#1F8A7A", coholding:"#3B6FD9", strategic:"#6B5CE7", consortium:"#E67A35" };
   const list = rows.map(r => r.m);
-  const gSet = new Map();
+  const showExt = moneyShowExternal();
+  const gSet = new Map(); // name -> role
   const invSet = new Map();
-  list.forEach(m => (m.participants||[]).forEach(p => {
-    if (!p.groupName) return;
-    if (!gSet.has(p.groupName)) gSet.set(p.groupName, p.groupName);
-    const invKey = (p.investorName || p.groupName) + "·" + p.groupName;
-    if (p.role !== "피투자") invSet.set(invKey, { name: p.investorName || p.groupName, group: p.groupName });
-  }));
+  const extHiddenByTarget = new Map(); // target -> names
+  list.forEach(m => {
+    const t = m.targetCompany || m.title;
+    (m.participants || []).forEach(p => {
+      if (!p.groupName) return;
+      const role = capitalRoleOf(p);
+      if (!showExt && isExternalCapital(role)) {
+        if (!extHiddenByTarget.has(t)) extHiddenByTarget.set(t, new Set());
+        extHiddenByTarget.get(t).add(p.groupName);
+        return;
+      }
+      if (!gSet.has(p.groupName) || role !== "domestic") gSet.set(p.groupName, role);
+      const invKey = (p.investorName || p.groupName) + "·" + p.groupName;
+      if (p.role !== "피투자") invSet.set(invKey, { name: p.investorName || p.groupName, group: p.groupName, role });
+    });
+  });
   const gArr = [...gSet.keys()];
   const invArr = [...invSet.entries()].map(([k,v]) => ({ key:k, ...v }));
   const targets = [...new Set(list.map(m => m.targetCompany || m.title))];
@@ -2167,6 +2751,9 @@ function renderMoneyNetwork(rows) {
     <text x="90" y="28" font-size="12" font-weight="700" fill="#73777D">기업집단</text>
     <text x="400" y="28" font-size="12" font-weight="700" fill="#73777D">투자 주체</text>
     <text x="780" y="28" font-size="12" font-weight="700" fill="#73777D">투자 대상</text>`;
+  if (!showExt && extHiddenByTarget.size) {
+    html += `<text x="1090" y="28" text-anchor="end" font-size="11" fill="#9A9EA5">해외·PEF 노드 숨김 · 토글로 표시</text>`;
+  }
   const colY = (i, n) => 58 + i * Math.min(44, 340 / Math.max(n,1));
   const gPos = {}, iPos = {}, tPos = {};
   gArr.forEach((name,i) => { gPos[name] = { x:90, y:colY(i, gArr.length) }; });
@@ -2178,7 +2765,8 @@ function renderMoneyNetwork(rows) {
     const tp = tPos[t]; if (!tp) return;
     const focus = MONEY_TIES[moneyFocus] && MONEY_TIES[moneyFocus].id === m.id;
     const col = TYPE_COLOR[m.relationType] || "#17191C";
-    (m.participants||[]).forEach(p => {
+    const visible = moneyVisibleParticipants(m);
+    visible.forEach(p => {
       if (p.role === "피투자") return;
       const gp = gPos[p.groupName];
       const invKey = (p.investorName || p.groupName) + "·" + p.groupName;
@@ -2190,30 +2778,55 @@ function renderMoneyNetwork(rows) {
         html += `<line x1="${ip.x+70}" y1="${ip.y}" x2="${tp.x-85}" y2="${tp.y}" stroke="${col}" stroke-width="${focus?2.6:1.2}" opacity="${focus?1:0.22}"/>`;
       }
     });
+    // 해외만 숨긴 경우: 국내→대상으로 점선 힌트
+    if (!showExt && extHiddenByTarget.has(t) && visible.some(p => p.role !== "피투자")) {
+      const any = visible.find(p => p.role !== "피투자" && gPos[p.groupName]);
+      if (any && gPos[any.groupName]) {
+        const gp = gPos[any.groupName];
+        html += `<line x1="${gp.x+55}" y1="${gp.y}" x2="${tp.x-85}" y2="${tp.y}" stroke="#9A9EA5" stroke-width="1.2" stroke-dasharray="4 3" opacity="${focus?0.7:0.25}"/>`;
+      }
+    }
   });
 
   gArr.forEach(name => {
     const p = gPos[name];
-    html += `<rect x="${p.x-55}" y="${p.y-14}" width="110" height="28" rx="6" fill="#FFFFFF" stroke="#E3E5E8" stroke-width="1.5"/>
-      <text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="11" font-weight="700" fill="#17191C">${esc(name)}</text>`;
+    const role = gSet.get(name) || "domestic";
+    const st = moneyNodeStyle(role);
+    const isDom = role === "domestic";
+    if (isDom) {
+      html += `<circle cx="${p.x}" cy="${p.y}" r="16" fill="#E9C934" stroke="#17191C" stroke-width="1.5"/>
+        <text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-size="10" font-weight="700" fill="#17191C">${esc(name.length>5?name.slice(0,4)+"…":name)}</text>`;
+    } else {
+      html += `<rect x="${p.x-52}" y="${p.y-13}" width="104" height="26" rx="${st.rx}" fill="${st.fill}" stroke="${st.stroke}" stroke-width="1.5" stroke-dasharray="${st.dash}"/>
+        <text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-size="10" font-weight="700" fill="${st.text}">${esc(name.length>8?name.slice(0,7)+"…":name)}</text>`;
+    }
   });
   invArr.forEach(inv => {
     const p = iPos[inv.key];
-    const short = inv.name.length > 14 ? inv.name.slice(0,14)+"…" : inv.name;
-    html += `<rect x="${p.x-70}" y="${p.y-14}" width="140" height="28" rx="6" fill="#E9C934" stroke="#17191C" stroke-width="1"/>
-      <text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="10" font-weight="700" fill="#17191C">${esc(short)}</text>`;
+    const st = moneyNodeStyle(inv.role || "domestic");
+    const short = inv.name.length > 12 ? inv.name.slice(0,12)+"…" : inv.name;
+    const fill = inv.role === "domestic" ? "#E9C934" : st.fill;
+    html += `<rect x="${p.x-70}" y="${p.y-14}" width="140" height="28" rx="${inv.role==="domestic"?8:st.rx}" fill="${fill}" stroke="${st.stroke}" stroke-width="1.2" stroke-dasharray="${st.dash}"/>
+      <text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="10" font-weight="700" fill="${st.text}">${esc(short)}</text>`;
   });
   targets.forEach(t => {
     const p = tPos[t];
-    const short = t.length > 16 ? t.slice(0,16)+"…" : t;
+    const short = t.length > 14 ? t.slice(0,14)+"…" : t;
     const isFocus = MONEY_TIES[moneyFocus] && (MONEY_TIES[moneyFocus].targetCompany===t || MONEY_TIES[moneyFocus].title===t);
+    const hidden = extHiddenByTarget.get(t);
     html += `<rect x="${p.x-85}" y="${p.y-14}" width="170" height="28" rx="6" fill="${isFocus?"#17191C":"#FFFFFF"}" stroke="${isFocus?"#E9C934":"#E3E5E8"}" stroke-width="${isFocus?2:1.5}"/>
       <text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="11" font-weight="700" fill="${isFocus?"#fff":"#17191C"}">${esc(short)}</text>`;
+    if (hidden && hidden.size) {
+      html += `<text x="${p.x}" y="${p.y+24}" text-anchor="middle" font-size="9" fill="#9A9EA5">+해외 ${[...hidden].join("·")}</text>`;
+    }
   });
   if (!list.length) {
     html += `<text x="550" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="#73777D">필터 결과 없음</text>`;
   }
   svg.innerHTML = html;
+  // 숨긴 해외 라벨이 잘리지 않도록 viewBox 하단 여유
+  if (!showExt && extHiddenByTarget.size) svg.setAttribute("viewBox", "0 0 1100 460");
+  else svg.setAttribute("viewBox", "0 0 1100 420");
 }
 
 function renderMoney() {
@@ -2245,18 +2858,30 @@ function renderMoney() {
   renderMoneyDetail(MONEY_TIES[moneyFocus]);
 
   const grid = document.getElementById("money-grid");
-  grid.innerHTML = rows.map(({ m, i }) => `
-    <article class="conflict-card corp ${i===moneyFocus?"open":""}" data-money="${i}" tabindex="0">
+  grid.innerHTML = rows.map(({ m, i }) => {
+    const roles = [...new Set((m.participants||[]).map(capitalRoleOf).filter(r => r !== "domestic"))];
+    const roleBadges = roles.map(capitalBadgeHtml).join(" ");
+    const names = (m.participants||[]).map(p => {
+      const role = capitalRoleOf(p);
+      if (!moneyShowExternal() && isExternalCapital(role)) return null;
+      return p.groupName;
+    }).filter((v, idx, a) => v && a.indexOf(v) === idx);
+    const hidden = !moneyShowExternal() && moneyHasExternal(m)
+      ? ` <span class="badge ext-hint">해외·PEF 숨김</span>` : "";
+    return `
+    <article class="conflict-card corp ${i===moneyFocus?"open":""} ${moneyHasExternal(m)?"has-external":""}" data-money="${i}" tabindex="0">
       <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
         <h3>${esc(m.title)}</h3>
         <span><span class="badge person">${esc(MONEY_TYPE_LABEL[m.relationType]||m.relationType)}</span>
-        <span class="badge ${m.status==="active"?"closed":"open"}">${esc({active:"유지",disputed:"분쟁",reduced:"축소",exited:"종료"}[m.status]||m.status)}</span></span>
+        <span class="badge ${m.status==="active"?"closed":"open"}">${esc({active:"유지",disputed:"분쟁",reduced:"축소",exited:"종료"}[m.status]||m.status)}</span>
+        ${roleBadges}</span>
       </div>
-      <div class="meta">${esc(m.targetCompany||"")} · 기준 ${esc(m.asOf||"—")}</div>
+      <div class="meta">${esc(m.targetCompany||"")} · 기준 ${esc(m.asOf||"—")}${hidden}</div>
       <div class="result">${esc(m.summary||"")}</div>
-      <div class="meta">${esc((m.participants||[]).map(p=>p.groupName).filter((v,i,a)=>a.indexOf(v)===i).join(" · "))}</div>
+      <div class="meta">${esc(names.join(" · ") || "—")}</div>
       <div class="tap-hint">선택 → 상단 상세·네트워크 강조</div>
-    </article>`).join("");
+    </article>`;
+  }).join("");
   grid.querySelectorAll("[data-money]").forEach(el => {
     const open = () => { moneyFocus = +el.dataset.money; renderMoney(); };
     el.onclick = open;
@@ -2541,7 +3166,7 @@ function renderFtc() {
     const treeBtn = g.tree
       ? `<button class="badge tree" data-tree="${esc(g.tree)}">가계도</button>`
       : `<span class="badge">—</span>`;
-    const asset = g.asset == null ? "—" : Number(g.asset).toFixed(1);
+    const asset = g.asset == null ? "—" : formatMoneyKR(Number(g.asset), "조");
     return `<tr class="${g.tree ? "clickable" : ""}" data-tree="${esc(g.tree || "")}">
       <td>${g.rank}</td><td><strong>${esc(g.name)}</strong></td><td>${esc(g.owner)}</td>
       <td><span class="badge ${corp ? "corp" : "person"}">${corp ? "법인" : "자연인"}</span></td>
@@ -2866,13 +3491,28 @@ function renderPoliticsTable() {
   if (!tb) return;
   tb.innerHTML = POLITICS_TIES.map(p =>
     `<tr>
-      <td><strong>${p.group}</strong></td>
-      <td>${p.people}</td>
-      <td><span class="badge person">${p.politics}</span></td>
-      <td>${p.gen}</td>
-      <td>${p.note}</td>
+      <td><strong>${esc(p.group)}</strong></td>
+      <td>${esc(p.people)}</td>
+      <td><span class="badge person">${esc(p.politics)}</span></td>
+      <td>${esc(p.gen)}</td>
+      <td>${esc(p.note)}</td>
     </tr>`
   ).join("");
+  renderMediaTable();
+}
+
+function renderMediaTable() {
+  const tb = document.getElementById("media-tbody");
+  if (!tb) return;
+  tb.innerHTML = (typeof MEDIA_TIES !== "undefined" ? MEDIA_TIES : []).map(p =>
+    `<tr>
+      <td><strong>${esc(p.group)}</strong></td>
+      <td>${esc(p.people)}</td>
+      <td><span class="badge tree">${esc(p.media)}</span></td>
+      <td>${esc(p.gen)}</td>
+      <td>${esc(p.note)}</td>
+    </tr>`
+  ).join("") || `<tr><td colspan="5">등록된 언론·방송 혼맥 없음</td></tr>`;
 }
 
 function schoolById(id) { return SCHOOLS.find(s => s.id === id); }
@@ -3011,6 +3651,7 @@ function openPerson(name) {
   const divs = DIVORCES.filter(d => d.who === name || d.spouse === name);
   const marry = marriagesForPerson(name);
   const politics = politicsForPerson(name);
+  const media = mediaForPerson(name);
   const transfers = typeof TRANSFERS !== "undefined" ? TRANSFERS.filter(t => (t.note||"").includes(name) || (t.to||"").includes(name) || (t.from||"").includes(name)) : [];
   const money = MONEY_TIES.filter(m => moneyBlob(m).includes(name) || (m.participants||[]).some(p => (p.investorName||"").includes(name)));
   const conflicts = typeof CONFLICTS !== "undefined" ? CONFLICTS.filter(c => ((c.sides||"")+(c.title||"")+(c.detail||"")+(c.issue||"")).includes(name)) : [];
@@ -3053,7 +3694,9 @@ function openPerson(name) {
     (divs.length ? `<div style="margin-top:8px"><strong style="font-size:0.82rem;color:var(--muted)">이혼·소송</strong>${divs.map(d =>
       `<div class="meta" style="margin-top:4px">${esc(d.who)} × ${esc(d.spouse)} (${esc(d.when)}) — ${esc(d.note||"")}</div>`).join("")}</div>` : "") +
     (politics.length ? `<div style="margin-top:8px"><strong style="font-size:0.82rem;color:var(--muted)">정·관계(표 전용)</strong>${politics.map(p =>
-      `<div class="meta" style="margin-top:4px">${esc(p.people)} · ${esc(p.politics)} — ${esc(p.note||"")}</div>`).join("")}</div>` : "")
+      `<div class="meta" style="margin-top:4px">${esc(p.people)} · ${esc(p.politics)} — ${esc(p.note||"")}</div>`).join("")}</div>` : "") +
+    (media.length ? `<div style="margin-top:8px"><strong style="font-size:0.82rem;color:var(--muted)">언론·방송 혼맥</strong>${media.map(p =>
+      `<div class="meta" style="margin-top:4px">${esc(p.people)} · ${esc(p.media)} — ${esc(p.note||"")}</div>`).join("")}</div>` : "")
   );
 
   html += sec("3. 학력 및 학맥", hak ? `<p style="margin:0">${esc([hak.high && `고교 ${hak.high}`, hak.univ && `대학 ${hak.univ}`, hak.abroad && `해외 ${hak.abroad}`].filter(Boolean).join(" · ") || "학력 단편")}</p>${hak.note?`<p class="meta" style="margin:6px 0 0">${esc(hak.note)}</p>`:""}` : empty);
@@ -3149,6 +3792,17 @@ function runGlobalSearch() {
     `<button class="chip" type="button" data-money-jump="${MONEY_TIES.indexOf(m)}">${esc(m.title)}</button>`).join("")}</div></div>`);
   const conflictsQ = (typeof CONFLICTS !== "undefined" ? CONFLICTS : []).filter(c => ((c.title||"")+(c.sides||"")+(c.issue||"")+(c.detail||"")).includes(q)).slice(0, 6);
   const transfersQ = (typeof TRANSFERS !== "undefined" ? TRANSFERS : []).filter(t => ((t.from||"")+(t.to||"")+(t.note||"")+(t.company||"")+(t.when||"")).includes(q)).slice(0, 6);
+  const govCycleQ = CIRCULAR_CHAINS.filter(c => [c.title,c.group,c.summary,c.note,(c.nodes||[]).map(n=>n.name).join(" ")].join(" ").includes(q)).slice(0, 6);
+  const govProxyQ = PROXY_BATTLES.filter(b => [b.title,b.company,b.group,b.ownerLabel,b.challengerLabel,b.note].join(" ").includes(q)).slice(0, 6);
+  const govRiskQ = SUCCESSION_RISKS.filter(r => [r.title,r.group,r.person,r.riskType,r.detail].join(" ").includes(q)).slice(0, 6);
+  if (govCycleQ.length || govProxyQ.length || govRiskQ.length) {
+    const chips = [
+      ...govCycleQ.map(c => `<button class="chip" type="button" data-gov-jump="cycle">${esc(c.title)}</button>`),
+      ...govProxyQ.map(b => `<button class="chip" type="button" data-gov-jump="proxy">${esc(b.title)}</button>`),
+      ...govRiskQ.map(r => `<button class="chip" type="button" data-gov-jump="succession">${esc(r.title)}</button>`),
+    ].join("");
+    parts.push(`<div class="result-group"><h4>거버넌스</h4><div class="chip-row">${chips}</div></div>`);
+  }
   if (conflictsQ.length) parts.push(`<div class="result-group"><h4>경영권 분쟁</h4><div class="chip-row">${conflictsQ.map(c =>
     `<button class="chip" type="button" data-mode-jump="conflict">${esc(c.title||c.sides||"분쟁")}</button>`).join("")}</div></div>`);
   if (transfersQ.length) parts.push(`<div class="result-group"><h4>지분·소유권 변동</h4><div class="chip-row">${transfersQ.map(t =>
@@ -3162,6 +3816,7 @@ function runGlobalSearch() {
   box.querySelectorAll("[data-school]").forEach(b => b.onclick = () => { schoolId = b.dataset.school; schoolDept = "all"; setMode("school"); });
   box.querySelectorAll("[data-mode-jump]").forEach(b => b.onclick = () => setMode(b.dataset.modeJump));
   box.querySelectorAll("[data-money-jump]").forEach(b => b.onclick = () => { setMode("money"); openMoneyModal(+b.dataset.moneyJump); });
+  box.querySelectorAll("[data-gov-jump]").forEach(b => b.onclick = () => { setMode("gov"); setGovSub(b.dataset.govJump); });
 }
 
 document.querySelectorAll("#mode-bar [data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
@@ -3200,6 +3855,10 @@ document.getElementById("money-type").onchange = renderMoney;
 document.getElementById("money-status").onchange = renderMoney;
 document.getElementById("money-group").onchange = renderMoney;
 document.getElementById("money-q").oninput = renderMoney;
+document.getElementById("money-ext").onchange = renderMoney;
+document.querySelectorAll("#gov-sub-bar [data-gov]").forEach(b => {
+  b.onclick = () => setGovSub(b.dataset.gov);
+});
 document.getElementById("global-search-btn").onclick = runGlobalSearch;
 document.getElementById("global-clear-btn").onclick = () => {
   document.getElementById("global-q").value = "";
@@ -3572,7 +4231,7 @@ document.getElementById("share-btn").onclick = async () => {
 (function restoreFromHash() {
   const p = new URLSearchParams(location.hash.slice(1));
   const m = p.get("m");
-  const MODES = ["home","ftc","lineage","gen","tree","network","money","school","conflict","transfer"];
+  const MODES = ["home","ftc","lineage","gen","tree","network","money","school","gov","conflict","transfer"];
   if (m === "school" && p.get("s") && SCHOOLS.some(s => s.id === p.get("s"))) { schoolId = p.get("s"); schoolDept = p.get("sd") || "all"; }
   if (m === "tree" && p.get("f") && TREES[p.get("f")]) { familyId = p.get("f"); }
   if (m === "network" && p.get("g") && byId[p.get("g")]) selected = p.get("g");
