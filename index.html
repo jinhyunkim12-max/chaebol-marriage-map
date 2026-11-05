@@ -389,6 +389,11 @@
     .conflict-card.has-external { box-shadow: inset 4px 0 0 #9A9EA5; }
     tr.pef td:first-child { box-shadow: inset 4px 0 0 #8B5CF6; }
     .pef-toggle { display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; font-weight:600; color:var(--muted); cursor:pointer; }
+    .ally-note {
+      margin-top:8px; padding:8px 10px; border-radius:8px; font-size:0.8rem; line-height:1.45;
+      background:#F7F8F9; border:1px dashed #D0D3D8; color:#5C6168;
+    }
+    .ally-note strong { color:var(--text); font-weight:700; }
     .capital-legend { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; font-size:0.82rem; color:var(--muted); margin-bottom:12px; }
     .capital-legend .shape { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:middle; border:1.5px solid #17191C; }
     .capital-legend .shape.dom { border-radius:50%; background:#E9C934; }
@@ -648,7 +653,7 @@
         <div id="conflict-divorce-tools" class="toolbar hidden" style="margin-top:0">
           <input type="search" id="divorce-q" placeholder="인물·가문 검색" />
         </div>
-        <div class="note" id="conflict-note">가문·경영권·자본 분쟁만. 카드 탭 → 세부. <span class="badge closed">종결</span> / <span class="badge open">진행</span></div>
+        <div class="note" id="conflict-note">가문·경영권·자본 분쟁만. 카드의 <strong>비고 · 우군</strong>은 PEF·정책금융·전략주주 등 표 구도 참고. 카드 탭 → 세부. <span class="badge closed">종결</span> / <span class="badge open">진행</span></div>
         <div class="conflict-grid" id="conflict-grid"></div>
       </div>
     </section>
@@ -1709,7 +1714,8 @@ const CONFLICTS = [
     detail:"신격호·신춘호 형제 사이 라면사업을 둘러싼 앙금이 오래 회자됐다. 농심은 별도 그룹으로 성장했고, 롯데라면 유통 이슈 등으로도 거론됐다. 공개 경영권 분쟁이라기보다 분가·사업 갈등." },
   { type:"family", status:"closed", title:"한진 남매의 난", when:"2019~21", sides:"조원태 ↔ 조현아(+KCGI·반도)", issue:"한진칼·대한항공 경영권",
     result:"산은 우군으로 조원태 방어.",
-    detail:"조양호 회장 사후 조원태·조현아·조현민 남매 갈등과 KCGI·반도건설 3자 연합 공습이 겹쳤다. 산업은행 등 우군으로 조원태가 방어에 성공하며 종결." },
+    detail:"조양호 회장 사후 조원태·조현아·조현민 남매 갈등과 KCGI·반도건설 3자 연합 공습이 겹쳤다. 산업은행 등 우군으로 조원태가 방어에 성공하며 종결.",
+    allies:"조원태 측 우군: 산업은행·델타항공 등. 조현아 측: KCGI·반도건설 3자 연합. 이후 호반은 별도 2대주주로 잔류(잠재 변수)." },
   { type:"family", status:"closed", title:"한진 2세 유언·상속 분쟁", when:"2002~", sides:"조양호 ↔ 조남호·조정호", issue:"조중훈 유언·계열 분할",
     result:"법정 다툼 후 한진·한진중공업·메리츠 분가.",
     detail:"조중훈 창업주 사후 유언장 진위·상속을 둘러싸고 형제 간 소송이 있었다. 결과적으로 한진(조양호)·한진중공업(조남호)·메리츠(조정호) 등으로 분가·종결." },
@@ -1727,10 +1733,12 @@ const CONFLICTS = [
     detail:"박삼구·박찬구 형제 갈등으로 금호아시아나와 금호석유화학이 2010년 분리됐다. 이후 ‘조카의 난’ 등 후속 갈등은 별도 사건으로 본다." },
   { type:"family", status:"open", title:"금호 ‘조카의 난’", when:"2021~", sides:"박찬구 ↔ 박철완(+행동주의)", issue:"자사주·경영권",
     result:"박찬구 측 방어(수차례). 재발 가능성.",
-    detail:"박찬구 회장과 조카 박철완·행동주의 연대가 자사주·이사회를 두고 충돌했다. 박찬구 측이 수차례 방어에 성공했으나 완전 종결로 보기 어려워 진행·잠복으로 분류." },
+    detail:"박찬구 회장과 조카 박철완·행동주의 연대가 자사주·이사회를 두고 충돌했다. 박찬구 측이 수차례 방어에 성공했으나 완전 종결로 보기 어려워 진행·잠복으로 분류.",
+    allies:"박철완 측: 행동주의·외부 연대. 박찬구 측: 기존 우호주·이사회 방어. 표대결·자사주가 변수." },
   { type:"family", status:"closed", title:"한국앤컴퍼니(한국타이어) 삼남매", when:"2020~23", sides:"조현범 ↔ 조현식·조희경 등(+MBK)", issue:"조양래 지분 승계·공개매수",
     result:"조현범·명예회장 측 방어. 정리 국면.",
-    detail:"조양래 명예회장이 조현범에게 지분을 넘긴 뒤 조현식·조희경 등과 MBK가 공개매수·경영권 분쟁을 벌였다. 조현범 측 방어로 일단락·정리 국면." },
+    detail:"조양래 명예회장이 조현범에게 지분을 넘긴 뒤 조현식·조희경 등과 MBK가 공개매수·경영권 분쟁을 벌였다. 조현범 측 방어로 일단락·정리 국면.",
+    allies:"조현식·조희경 측 우군: MBK파트너스(공개매수). 조현범·명예회장 측이 방어에 성공." },
 
   { type:"family", status:"closed", title:"한미약품 모녀 vs 형제", when:"2024~25", sides:"송영숙·임주현(+신동국·라데팡스) ↔ 임종윤·임종훈", issue:"OCI 통합 반대·상속세·경영권",
     result:"2025.2 형제 사임·1차 종결.",
@@ -1770,16 +1778,24 @@ const CONFLICTS = [
     detail:"김남호 회장이 명예회장으로 물러나고 전문경영인 체제가 들어선 뒤, 창업주 김준기와의 실권 갈등이 관측된다. 공개 주총 전쟁으로까지는 가지 않았으나 미종결로 분류." },
   { type:"corp", status:"open", title:"고려아연 ↔ 영풍·MBK", when:"2024~2026(진행)", sides:"최윤범 고려아연 ↔ 장형진 영풍 + MBK", issue:"75년 동업 파열·공개매수·이사회·유상증자",
     result:"2027 주총이 고비. 진행 중.",
-    detail:"장씨(영풍)·최씨(고려아연)가 함께 키운 동업 구조가 파열된 기업·자본 갈등이다(동일 가문 내 ‘형제의 난’이 아님). 영풍·MBK 지분 확대 vs 최윤범 측 이사회 우위(2026.9 임시주총 12대7 등). 유상증자·공개매수 공방이 이어지며 2027 정기주총이 분수령으로 거론된다." },
+    detail:"장씨(영풍)·최씨(고려아연)가 함께 키운 동업 구조가 파열된 기업·자본 갈등이다(동일 가문 내 ‘형제의 난’이 아님). 영풍·MBK 지분 확대 vs 최윤범 측 이사회 우위(2026.9 임시주총 12대7 등). 유상증자·공개매수 공방이 이어지며 2027 정기주총이 분수령으로 거론된다.",
+    allies:"최윤범 측 우군: 한화(~7%대)·현대차 HMG글로벌(~5%)·LG화학·크루서블JV 등(보도 기준). 영풍 측 우군: MBK파트너스(공개매수·공동보유). 현대차는 소송 이슈로 의결권 불참 관측도. 캐스팅보터·시점 변동." },
   { type:"corp", status:"open", title:"호반 ↔ 한진칼·대한항공", when:"2020~2026", sides:"호반(김상열家) ↔ 조원태·한진", issue:"한진칼 2대주주 · 통합 항공",
     result:"단순투자 공시. 잠재 갈등.",
-    detail:"호반은 한진칼 2대주주(~20%)로 남아 있다. 산은·델타 우군 속에 당장 주총 전쟁은 없으나 통합 대한항공 지배구조상 잠재 갈등으로 분류." },
+    detail:"호반은 한진칼 2대주주(~20%)로 남아 있다. 산은·델타 우군 속에 당장 주총 전쟁은 없으나 통합 대한항공 지배구조상 잠재 갈등으로 분류.",
+    allies:"조원태·한진 측 우군: 산업은행·델타항공. 호반은 전략·재무 투자자로 잔류하며 표 구도의 잠재 변수. 돈맥 공동주주 카드와 교차." },
   { type:"corp", status:"closed", title:"한진칼 3자연합 공습", when:"2019~21", sides:"KCGI·반도·조현아 ↔ 조원태", issue:"지분 연합·주총",
     result:"조원태 방어(산은 등).",
-    detail:"KCGI·반도건설·조현아 3자 연합의 경영권 공습. 산업은행 등 우군으로 조원태가 방어에 성공하며 종결." },
+    detail:"KCGI·반도건설·조현아 3자 연합의 경영권 공습. 산업은행 등 우군으로 조원태가 방어에 성공하며 종결.",
+    allies:"조원태 측: 산업은행·델타항공 등 우호·정책금융. 공습 측: KCGI(PEF)·반도건설·조현아 연합." },
   { type:"corp", status:"closed", title:"한미 ↔ OCI 통합 시도", when:"2024", sides:"송영숙·임주현 ↔ 임종윤·임종훈(+초기 신동국)", issue:"지주 통합·상속세",
     result:"통합 무산. 이후 4자 연합 재편.",
-    detail:"모녀 측 OCI 통합안이 형제 측·초기 신동국 연대에 막혀 주총에서 무산됐다. 이후 신동국이 모녀 측으로 돌아서며 4자 연합이 재편(가족 분쟁 1차전과 연결)." },
+    detail:"모녀 측 OCI 통합안이 형제 측·초기 신동국 연대에 막혀 주총에서 무산됐다. 이후 신동국이 모녀 측으로 돌아서며 4자 연합이 재편(가족 분쟁 1차전과 연결).",
+    allies:"초기: 신동국이 형제 측 연대 → 이후 모녀·신동국·라데팡스 4자 연합으로 재편. 외부 PE·전략주주가 가문 갈등에 겹친 사례." },
+  { type:"corp", status:"open", title:"SK㈜ 지분 매각·3%룰 우군 관측", when:"2025~2026", sides:"최태원(재산분할 재원) ↔ 시장·감사위원 규정", issue:"지분 매각 후 의결권·전략투자자",
+    result:"DFO·한국투자증권 매각 계약 보도. 우군 여부 미확정.",
+    detail:"최태원 회장이 이혼 재산분할 재원 마련을 위해 SK㈜ 지분 일부를 매각하는 계약이 공시·보도됐다. 전략투자자로 마이클 델 일가 패밀리오피스 운용 펀드(DFO Public Investments)와 한국투자증권이 거론된다.",
+    allies:"잠재 우군 관측: DFO(델家 패밀리오피스, ~1.34%·약5440억원)·한국투자증권(~0.94%·약4000억원). 감사위원 합산 3%룰에서 특수관계 합산 제외 시 별도 의결권 행사 가능 — 다만 의결권 공동행사·위임 약정은 미확인. ‘확정 우군’이 아닌 구조적 관측." },
 ];
 
 /**
@@ -2937,7 +2953,9 @@ function openConflictModal(idx) {
   document.getElementById("cm-vs").innerHTML =
     `<div class="vs-side">${left}</div><div class="vs-mid">VS</div><div class="vs-side">${right || "—"}</div>`;
   document.getElementById("cm-body").textContent =
-    (c.detail || "") + (c.result ? `\n\n요약: ${c.result}` : "");
+    (c.detail || "") +
+    (c.result ? `\n\n요약: ${c.result}` : "") +
+    (c.allies ? `\n\n비고 · 우군\n${c.allies}` : "");
   document.getElementById("conflict-modal").classList.remove("hidden");
 }
 
@@ -2973,7 +2991,7 @@ function setConflictSub(sub) {
   document.getElementById("conflict-divorce-tools").classList.toggle("hidden", sub !== "divorce");
   document.getElementById("conflict-note").innerHTML = sub === "divorce"
     ? "재벌·창업 기업인 이혼(재산분할 규모 있는 사례). 카드 탭 → 경위·<strong>재혼·후속</strong>. <span class=\"badge closed\">종결</span> / <span class=\"badge open\">진행</span>"
-    : `가문·경영권·자본 분쟁만. 카드 탭 → 세부. <span class="badge closed">종결</span> / <span class="badge open">진행</span>`;
+    : `가문·경영권·자본 분쟁만. 카드의 <strong>비고 · 우군</strong>은 PEF·정책금융·전략주주 등 표 구도 참고. 카드 탭 → 세부. <span class="badge closed">종결</span> / <span class="badge open">진행</span>`;
   renderConflict();
 }
 
@@ -3022,7 +3040,7 @@ function renderConflict() {
   const rows = CONFLICTS.map((c, i) => ({ c, i })).filter(({ c }) => {
     if (t !== "all" && c.type !== t) return false;
     if (stFilter !== "all" && conflictStatus(c) !== stFilter) return false;
-    if (q && !(c.title + c.sides + c.issue + c.result + (c.detail||"")).includes(q)) return false;
+    if (q && !(c.title + c.sides + c.issue + c.result + (c.detail||"") + (c.allies||"")).includes(q)) return false;
     return true;
   });
   const grid = document.getElementById("conflict-grid");
@@ -3031,21 +3049,25 @@ function renderConflict() {
     const [left, right] = splitSides(c.sides);
     const st = conflictStatus(c);
     const typeLabel = c.type === "family" ? "가문 내" : "기업·자본";
+    const ally = c.allies
+      ? `<div class="ally-note"><strong>비고 · 우군</strong> — ${esc(c.allies)}</div>`
+      : "";
     return `<article class="conflict-card ${c.type} ${st}" data-idx="${i}" tabindex="0">
       <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap">
-        <h3>${c.title}</h3>
+        <h3>${esc(c.title)}</h3>
         <span>
           <span class="badge ${st==="closed"?"closed":"open"}">${st==="closed"?"종결":"진행"}</span>
           <span class="badge ${c.type==="family"?"person":"tree"}">${typeLabel}</span>
         </span>
       </div>
-      <div class="meta">${c.when} · ${c.issue}</div>
+      <div class="meta">${esc(c.when)} · ${esc(c.issue)}</div>
       <div class="vs-row">
-        <div class="vs-side">${left}</div>
+        <div class="vs-side">${esc(left)}</div>
         <div class="vs-mid">VS</div>
-        <div class="vs-side">${right || "—"}</div>
+        <div class="vs-side">${esc(right || "—")}</div>
       </div>
-      <div class="result">${c.result}</div>
+      <div class="result">${esc(c.result)}</div>
+      ${ally}
       <div class="tap-hint">탭하여 세부 내용</div>
     </article>`;
   }).join("");
@@ -3986,7 +4008,7 @@ renderConflict = function() {
   const grid = document.getElementById("conflict-grid");
   grid.querySelectorAll(".conflict-card[data-idx]").forEach(card => {
     const c = CONFLICTS[+card.dataset.idx];
-    const kw = pefMatch([c.title, c.sides, c.issue, c.result, c.detail].join(" "));
+    const kw = pefMatch([c.title, c.sides, c.issue, c.result, c.detail, c.allies].join(" "));
     if (kw) {
       card.classList.add("pef");
       const badges = card.querySelector("h3 + span");
