@@ -367,6 +367,25 @@
       .home-explore { grid-template-columns: 1fr 1fr; }
       #global-results:not(.hidden) { margin-left: 14px; margin-right: 14px; }
     }
+
+    /* ===== 2026-11 피드백 반영: 그래프 도구·경로 요약·PEF 라벨·공유 ===== */
+    .graph-tools { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:0 0 8px; }
+    .graph-tools .pill { padding:5px 11px; font-size:0.8rem; }
+    .graph-tools .seg { display:inline-flex; border:1px solid var(--line-strong); border-radius:999px; overflow:hidden; }
+    .graph-tools .seg button { border:0; background:#fff; padding:5px 12px; font:600 0.8rem var(--font); color:var(--muted); cursor:pointer; }
+    .graph-tools .seg button.on { background:var(--dark); color:#fff; }
+    .graph-tools .zoom-level { font-size:0.78rem; color:var(--faint); min-width:40px; text-align:center; }
+    .graph-tools .spacer { flex:1 1 auto; }
+    svg.zoomed { cursor:grab; touch-action:none; }
+    svg.zoomed.dragging { cursor:grabbing; }
+    .graph-hidden { display:none !important; }
+    .path-summary { font-size:1.02rem; font-weight:700; color:var(--text); margin:0 0 6px; line-height:1.5; }
+    .path-summary .hop { display:inline-block; background:var(--brand); color:var(--dark); border-radius:6px; padding:0 7px; margin:0 2px; }
+    .badge.pef { background:#F1E8FD; color:#6B2FB3; }
+    .conflict-card.pef { box-shadow: inset 4px 0 0 #8B5CF6; }
+    tr.pef td:first-child { box-shadow: inset 4px 0 0 #8B5CF6; }
+    .pef-toggle { display:inline-flex; align-items:center; gap:6px; font-size:0.86rem; font-weight:600; color:var(--muted); cursor:pointer; }
+    .share-toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--dark); color:#fff; padding:10px 16px; border-radius:10px; font-size:0.9rem; z-index:9999; box-shadow:var(--shadow-lg); }
   </style>
 
 </head>
@@ -399,6 +418,7 @@
       <button class="pill" data-mode="conflict">갈등</button>
       <button class="pill" data-mode="transfer">손바뀜</button>
       <span class="pill ghost">F11 전체화면</span>
+      <button class="pill ghost" type="button" id="share-btn" title="지금 보고 있는 화면(탭·경로·학교·인물)을 링크로 복사">🔗 이 화면 링크 복사</button>
     </div>
     <div id="global-results" class="detail hidden"></div>
   </div>
@@ -543,6 +563,7 @@
             <option value="open">진행·미종결</option>
           </select>
           <input type="search" id="conflict-q" placeholder="사건·인물 검색" />
+          <label class="pef-toggle"><input type="checkbox" id="conflict-pef" /> PEF·행동주의 펀드 관련만</label>
         </div>
         <div id="conflict-divorce-tools" class="toolbar hidden" style="margin-top:0">
           <input type="search" id="divorce-q" placeholder="인물·가문 검색" />
@@ -594,6 +615,7 @@
             <option value="split">분가·계열분리</option>
           </select>
           <input type="search" id="transfer-q" placeholder="회사·매각 검색" />
+          <label class="pef-toggle"><input type="checkbox" id="transfer-pef" /> PEF·행동주의 펀드 관련만</label>
         </div>
       </div>
       <div class="panel-body">
@@ -2943,18 +2965,23 @@ function renderSchool() {
 
   const svg = document.getElementById("school-svg");
   const cx = 550, cy = 260, R = Math.min(210, 40 + alumni.length * 18);
-  let html = `<rect width="1100" height="520" fill="#FFFFFF"/>
-    <circle cx="${cx}" cy="${cy}" r="46" fill="#17191C" stroke="#E9C934" stroke-width="3"/>
-    <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">${esc(s.name)}</text>`;
-  alumni.forEach((p, i) => {
+  let html = `<rect width="1100" height="520" fill="#FFFFFF"/>`;
+  const pos = alumni.map((p, i) => {
     const a = -Math.PI/2 + (i / Math.max(alumni.length, 1)) * Math.PI * 2;
-    const x = cx + Math.cos(a) * R;
-    const y = cy + Math.sin(a) * R * 0.85;
-    html += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#D0D3D8" stroke-width="1.5"/>
-      <circle cx="${x}" cy="${y}" r="28" fill="#E9C934" stroke="#17191C" stroke-width="1.5"/>
+    return { p, x: cx + Math.cos(a) * R, y: cy + Math.sin(a) * R * 0.85 };
+  });
+  // 선을 먼저 모두 그리고 원·글자를 나중에 그려야 선이 글자를 가리지 않는다
+  pos.forEach(({ x, y }) => {
+    html += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#D0D3D8" stroke-width="1.5"/>`;
+  });
+  pos.forEach(({ p, x, y }) => {
+    html += `<circle cx="${x}" cy="${y}" r="28" fill="#E9C934" stroke="#17191C" stroke-width="1.5"/>
       <text x="${x}" y="${y-2}" text-anchor="middle" fill="#111111" font-size="11" font-weight="700">${esc(p.name)}</text>
       <text x="${x}" y="${y+12}" text-anchor="middle" fill="#3D3D3D" font-size="9" font-weight="600">${esc(p.group)}</text>`;
   });
+  // 가운데 학교는 선 위에 그려야 선에 가려지지 않는다
+  html += `<circle cx="${cx}" cy="${cy}" r="46" fill="#17191C" stroke="#E9C934" stroke-width="3"/>
+    <text x="${cx}" y="${cy+5}" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">${esc(s.name)}</text>`;
   if (!alumni.length) {
     html += `<text x="${cx}" y="${cy+80}" text-anchor="middle" fill="#5C5C5C" font-size="13" font-weight="600">동문 데이터 없음</text>`;
   }
@@ -3231,6 +3258,335 @@ renderFtc();
 drawNetwork();
 renderSchool();
 renderMoney();
+</script>
+<script>
+/* ===== 2026-11 피드백 반영 =====
+   1) 통합 검색: 입력 즉시 검색, 결과 칩이 해당 탭의 필터까지 채워 줌, 혼맥 가문 바로 선택
+   2) 혼맥·돈맥·학맥 그래프: 확대/축소/초기화, 끌어서 이동, 그래프↔목록 전환(모바일은 목록 기본), 이미지 저장
+   3) 경로 탐색: "A와 B는 C를 거쳐 2단계로 연결됩니다" 요약 문장
+   4) 갈등·손바뀜: 본문에 PEF·행동주의 펀드가 언급된 사례 라벨과 필터
+   5) 공유: 지금 화면 상태를 담은 링크 복사(탭·경로·학교·인물) */
+
+/* ---------- 공통 ---------- */
+function hasBatchim(word) {
+  const ch = String(word || "").trim().slice(-1);
+  const code = ch.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3) return (code - 0xAC00) % 28 !== 0;
+  if (/[0-9]/.test(ch)) return /[013678]/.test(ch); // 영·일·삼·육·칠·팔
+  if (/[lmnrLMNR]/.test(ch)) return true;           // 엘·엠·엔·알
+  return false;
+}
+const josa = (w, withB, withoutB) => w + (hasBatchim(w) ? withB : withoutB);
+
+function toast(msg) {
+  const t = document.createElement("div");
+  t.className = "share-toast"; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2200);
+}
+
+/* ---------- 3) 경로 요약 문장 ---------- */
+const _runPathFind = runPathFind;
+runPathFind = function() {
+  _runPathFind();
+  const a = document.getElementById("path-a").value;
+  const b = document.getElementById("path-b").value;
+  const pm = (document.getElementById("path-mode") || {}).value || "all";
+  const box = document.getElementById("path-result");
+  if (a && b && a !== b) {
+    const path = findGroupPath(a, b, pm);
+    if (path) {
+      const A = byId[a].name, B = byId[b].name, n = path.steps.length;
+      const mids = path.nodes.slice(1, -1).map(id => byId[id].name);
+      let s;
+      if (n === 1) {
+        const e = path.steps[0];
+        s = `${josa(A, "과", "와")} ${josa(B, "은", "는")} <span class="hop">1단계</span>, ${e.kind === "marriage" ? "직접 혼인으로 맺어진 사돈" : "같은 뿌리에서 갈라진 분가"} 관계입니다.`;
+      } else {
+        const via = mids.join(" → ");
+        s = `${josa(A, "과", "와")} ${josa(B, "은", "는")} ${josa(via, "을", "를")} 거쳐 <span class="hop">${n}단계</span>로 연결됩니다.`;
+      }
+      if (path.steps.some(e => e.confidence === "vague")) s += ` <span class="badge vague">일부 연결은 당사자 실명 미확정</span>`;
+      box.insertAdjacentHTML("afterbegin", `<div class="path-summary">${s}</div>`);
+    }
+  }
+  writeHash();
+};
+document.getElementById("btn-path").onclick = () => runPathFind();
+
+/* ---------- 4) PEF·행동주의 라벨 ---------- */
+const PEF_RE = /MBK|한앤컴퍼니|한앤코|사모펀드|PEF|행동주의|KCGI|얼라인|IMM|어피니티|칼라일|KKR|베인캐피탈|스틱인베스트|VIG|JKL|엘리엇|헤지펀드|트러스톤|플래쉬라이트|차파트너스/;
+function pefMatch(text) { const m = String(text || "").match(PEF_RE); return m ? m[0] : null; }
+const pefBadge = kw => `<span class="badge pef" title="본문에 '${esc(kw)}' 언급">PEF·행동주의</span>`;
+
+const _renderConflict = renderConflict;
+renderConflict = function() {
+  _renderConflict();
+  if (conflictSub !== "fight") return;
+  const only = document.getElementById("conflict-pef").checked;
+  const grid = document.getElementById("conflict-grid");
+  grid.querySelectorAll(".conflict-card[data-idx]").forEach(card => {
+    const c = CONFLICTS[+card.dataset.idx];
+    const kw = pefMatch([c.title, c.sides, c.issue, c.result, c.detail].join(" "));
+    if (kw) {
+      card.classList.add("pef");
+      const badges = card.querySelector("h3 + span");
+      if (badges) badges.insertAdjacentHTML("beforeend", " " + pefBadge(kw));
+    } else if (only) card.remove();
+  });
+  if (only && !grid.children.length) grid.innerHTML = `<div class="note">조건에 맞는 PEF·행동주의 관련 분쟁이 없습니다.</div>`;
+};
+document.getElementById("conflict-pef").onchange = () => renderConflict();
+document.getElementById("conflict-type").onchange = () => renderConflict();
+document.getElementById("conflict-status").onchange = () => renderConflict();
+document.getElementById("conflict-q").oninput = () => renderConflict();
+document.getElementById("divorce-q").oninput = () => renderConflict();
+
+renderTransfer = function() {
+  const t = document.getElementById("transfer-type").value;
+  const q = (document.getElementById("transfer-q").value || "").trim();
+  const only = document.getElementById("transfer-pef").checked;
+  const label = { chaebol:"재벌↔재벌", pe:"재벌↔PE·기타", split:"분가·계열분리" };
+  const rows = TRANSFERS.map(x => ({ x, kw: pefMatch([x.company, x.from, x.to, x.note].join(" ")) })).filter(({ x, kw }) => {
+    if (t !== "all" && x.kind !== t) return false;
+    if (q && !(x.company + x.from + x.to + x.note).includes(q)) return false;
+    if (only && !kw) return false;
+    return true;
+  });
+  document.getElementById("transfer-tbody").innerHTML = rows.length ? rows.map(({ x, kw }) =>
+    `<tr class="${kw ? "pef" : ""}">
+      <td><strong>${x.company}</strong></td>
+      <td>${x.from}</td>
+      <td>${x.to}</td>
+      <td>${x.when}</td>
+      <td><span class="badge person">${label[x.kind]||x.kind}</span>${kw ? " " + pefBadge(kw) : ""}</td>
+      <td>${x.note}</td>
+    </tr>`).join("")
+    : `<tr><td colspan="6" style="color:var(--muted)">조건에 맞는 사례가 없습니다.</td></tr>`;
+};
+document.getElementById("transfer-pef").onchange = () => renderTransfer();
+document.getElementById("transfer-type").onchange = () => renderTransfer();
+document.getElementById("transfer-q").oninput = () => renderTransfer();
+(() => { // 안내 문구
+  const n1 = document.getElementById("conflict-note");
+  if (n1) n1.insertAdjacentHTML("beforeend", ` · <span class="badge pef">PEF·행동주의</span> = 본문에 사모펀드·행동주의 펀드(MBK·KCGI 등)가 언급된 사례`);
+  const n2 = document.querySelector("#view-transfer .note");
+  if (n2) n2.insertAdjacentHTML("beforeend", ` <span class="badge pef">PEF·행동주의</span>는 이전·이후 주인이나 메모에 사모펀드가 언급된 사례입니다.`);
+})();
+
+/* ---------- 2) 그래프 도구 ---------- */
+const MOBILE = window.matchMedia("(max-width: 640px)").matches;
+
+function makeZoomable(svg, onChange) {
+  const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+  const st = { k: 1, cx: W / 2, cy: H / 2 };
+  function apply() {
+    st.k = Math.min(6, Math.max(1, st.k));
+    const w = W / st.k, h = H / st.k;
+    st.cx = Math.min(W - w / 2, Math.max(w / 2, st.cx));
+    st.cy = Math.min(H - h / 2, Math.max(h / 2, st.cy));
+    svg.setAttribute("viewBox", `${(st.cx - w / 2).toFixed(1)} ${(st.cy - h / 2).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+    svg.classList.toggle("zoomed", st.k > 1.001);
+    onChange && onChange(st.k);
+  }
+  const pts = new Map();
+  let moved = false, last = null, pinch0 = null;
+  const unit = () => (W / st.k) / (svg.clientWidth || W);
+  svg.addEventListener("pointerdown", e => {
+    if (st.k <= 1.001) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    moved = false; last = { x: e.clientX, y: e.clientY };
+    if (pts.size === 2) { const [p, q] = [...pts.values()]; pinch0 = { d: Math.hypot(p.x - q.x, p.y - q.y), k: st.k }; }
+    svg.classList.add("dragging");
+  });
+  window.addEventListener("pointermove", e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 2 && pinch0) {
+      const [p, q] = [...pts.values()];
+      st.k = pinch0.k * Math.hypot(p.x - q.x, p.y - q.y) / (pinch0.d || 1);
+      moved = true; apply(); return;
+    }
+    const dx = e.clientX - last.x, dy = e.clientY - last.y;
+    if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+    st.cx -= dx * unit(); st.cy -= dy * unit();
+    last = { x: e.clientX, y: e.clientY };
+    apply();
+  });
+  const up = e => {
+    pts.delete(e.pointerId);
+    if (pts.size < 2) pinch0 = null;
+    if (!pts.size) svg.classList.remove("dragging");
+    else last = [...pts.values()][0];
+  };
+  window.addEventListener("pointerup", up);
+  window.addEventListener("pointercancel", up);
+  // 끌어서 이동한 뒤에는 노드 클릭으로 처리하지 않음
+  svg.addEventListener("click", e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  return {
+    zoom(f) { st.k *= f; apply(); },
+    reset() { st.k = 1; st.cx = W / 2; st.cy = H / 2; apply(); },
+  };
+}
+
+function saveSvgPng(svg, name) {
+  const clone = svg.cloneNode(true);
+  const vb = svg.viewBox.baseVal;
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  clone.setAttribute("width", vb.width); clone.setAttribute("height", vb.height);
+  clone.setAttribute("style", "font-family:'Malgun Gothic','Apple SD Gothic Neo','IBM Plex Sans KR',sans-serif;background:#fff");
+  const data = new XMLSerializer().serializeToString(clone);
+  const img = new Image();
+  img.onload = () => {
+    const scale = 2, cv = document.createElement("canvas");
+    cv.width = vb.width * scale; cv.height = vb.height * scale;
+    const ctx = cv.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    ctx.font = `${12 * scale}px sans-serif`; ctx.fillStyle = "#9A9EA5"; ctx.textAlign = "right";
+    ctx.fillText("CHAEBOL ARCHIVE · 기준일 2026.5.1", cv.width - 12 * scale, cv.height - 10 * scale);
+    const a = document.createElement("a");
+    a.download = name + ".png"; a.href = cv.toDataURL("image/png"); a.click();
+  };
+  img.onerror = () => toast("이미지 저장에 실패했습니다.");
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(data);
+}
+
+function addGraphTools({ svgId, hideIds = [], listEl, listLabel, fileName }) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const bar = document.createElement("div");
+  bar.className = "graph-tools";
+  bar.innerHTML = `<span class="seg" role="group" aria-label="보기 방식">
+      <button type="button" data-v="graph" class="on">그래프</button><button type="button" data-v="list">${listLabel}</button>
+    </span>
+    <span class="z"><button class="pill" type="button" data-z="out" aria-label="축소">−</button>
+    <span class="zoom-level">100%</span>
+    <button class="pill" type="button" data-z="in" aria-label="확대">＋</button>
+    <button class="pill" type="button" data-z="reset">초기 화면</button></span>
+    <span class="spacer"></span>
+    <button class="pill ghost" type="button" data-z="png">이미지 저장</button>`;
+  svg.parentNode.insertBefore(bar, svg);
+  const lvl = bar.querySelector(".zoom-level");
+  const z = makeZoomable(svg, k => { lvl.textContent = Math.round(k * 100) + "%"; });
+  bar.querySelector('[data-z="in"]').onclick = () => z.zoom(1.4);
+  bar.querySelector('[data-z="out"]').onclick = () => z.zoom(1 / 1.4);
+  bar.querySelector('[data-z="reset"]').onclick = () => z.reset();
+  bar.querySelector('[data-z="png"]').onclick = () => saveSvgPng(svg, fileName);
+  const zoomGroup = bar.querySelector(".z"), pngBtn = bar.querySelector('[data-z="png"]');
+  function setView(v, scroll) {
+    bar.querySelectorAll(".seg button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+    const hide = v === "list";
+    [svg, ...hideIds.map(id => document.getElementById(id))].forEach(el => el && el.classList.toggle("graph-hidden", hide));
+    zoomGroup.classList.toggle("graph-hidden", hide);
+    pngBtn.classList.toggle("graph-hidden", hide);
+    if (hide && scroll) { const el = listEl(); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+  bar.querySelectorAll(".seg button").forEach(b => b.onclick = () => setView(b.dataset.v, true));
+  if (MOBILE) setView("list", false);
+}
+
+addGraphTools({ svgId: "net-svg", hideIds: ["net-legend"], listLabel: "목록",
+  listEl: () => document.getElementById("marriage-tbody").closest(".table-scroll"), fileName: "혼맥-네트워크" });
+addGraphTools({ svgId: "money-svg", listLabel: "목록",
+  listEl: () => document.getElementById("money-grid"), fileName: "돈맥-네트워크" });
+addGraphTools({ svgId: "school-svg", listLabel: "목록",
+  listEl: () => document.getElementById("school-tbody").closest(".table-scroll"), fileName: "학맥-네트워크" });
+
+/* ---------- 1) 통합 검색 보완 ---------- */
+const _runGlobalSearch = runGlobalSearch;
+runGlobalSearch = function() {
+  _runGlobalSearch();
+  const q = (document.getElementById("global-q").value || "").trim();
+  const box = document.getElementById("global-results");
+  if (!q) return;
+  // 혼맥 네트워크의 가문(원)을 바로 선택
+  const nets = NET_GROUPS.filter(g => g.name.includes(q)).slice(0, 8);
+  if (nets.length) {
+    if (box.querySelector(".meta") && !box.querySelector(".result-group")) box.innerHTML = "";
+    box.insertAdjacentHTML("afterbegin", `<div class="result-group"><h4>혼맥 가문</h4><div class="chip-row">${nets.map(g =>
+      `<button class="chip" type="button" data-netg="${esc(g.id)}">${esc(g.name)}</button>`).join("")}</div></div>`);
+    box.querySelectorAll("[data-netg]").forEach(b => b.onclick = () => { selected = b.dataset.netg; pathHighlight = new Set(); setMode("network"); });
+  }
+  // 갈등·손바뀜 칩은 해당 탭 검색창까지 채워서 이동
+  box.querySelectorAll('[data-mode-jump="conflict"]').forEach(b => b.onclick = () => {
+    setMode("conflict"); setConflictSub("fight");
+    document.getElementById("conflict-q").value = b.textContent.trim(); renderConflict();
+  });
+  box.querySelectorAll('[data-mode-jump="transfer"]').forEach(b => b.onclick = () => {
+    document.getElementById("transfer-q").value = b.textContent.trim(); setMode("transfer");
+  });
+};
+let _gqTimer = null;
+document.getElementById("global-search-btn").onclick = () => runGlobalSearch();
+document.getElementById("global-q").addEventListener("input", () => {
+  clearTimeout(_gqTimer); _gqTimer = setTimeout(() => runGlobalSearch(), 250);
+});
+
+/* ---------- 5) 공유 링크 ---------- */
+let currentPerson = null, _hashReady = false;
+function writeHash() {
+  if (!_hashReady) return;
+  const p = new URLSearchParams();
+  if (mode && mode !== "home") p.set("m", mode);
+  if (mode === "network") {
+    const a = document.getElementById("path-a").value, b = document.getElementById("path-b").value;
+    if (a && b && pathHighlight.size) { p.set("a", a); p.set("b", b); p.set("pm", document.getElementById("path-mode").value); }
+    else if (selected) p.set("g", selected);
+  }
+  if (mode === "school") { p.set("s", schoolId); if (schoolDept !== "all") p.set("sd", schoolDept); }
+  if (mode === "tree" && familyId) p.set("f", familyId);
+  if (currentPerson) p.set("p", currentPerson);
+  const h = p.toString();
+  history.replaceState(null, "", h ? "#" + h : location.pathname + location.search);
+}
+const _setMode = setMode;
+setMode = function(m) { _setMode(m); writeHash(); };
+document.querySelectorAll("#mode-bar [data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+document.querySelectorAll("#home-explore [data-jump]").forEach(b => b.onclick = () => setMode(b.getAttribute("data-jump")));
+const _renderSchool = renderSchool;
+renderSchool = function() { _renderSchool(); writeHash(); };
+const _drawNetwork = drawNetwork;
+drawNetwork = function() { _drawNetwork(); writeHash(); };
+const _renderTree = renderTree;
+renderTree = function() { _renderTree(); writeHash(); };
+const _openPerson = openPerson;
+openPerson = function(name) { currentPerson = name; _openPerson(name); writeHash(); };
+const _closePersonModal = closePersonModal;
+closePersonModal = function() { currentPerson = null; _closePersonModal(); writeHash(); };
+document.getElementById("pm-close").onclick = () => closePersonModal();
+document.getElementById("person-modal").onclick = e => { if (e.target.id === "person-modal") closePersonModal(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape" && currentPerson) closePersonModal(); });
+
+document.getElementById("share-btn").onclick = async () => {
+  writeHash();
+  const url = location.href;
+  if (location.protocol === "file:") { toast("내 PC 파일이라 공유 링크가 아닙니다. 웹에 올린 주소에서 눌러 주세요."); return; }
+  if (navigator.share && MOBILE) {
+    try { await navigator.share({ title: document.title, url }); return; } catch (e) { /* 취소 시 복사로 */ }
+  }
+  try { await navigator.clipboard.writeText(url); toast("링크를 복사했습니다."); }
+  catch (e) { window.prompt("아래 링크를 복사하세요.", url); }
+};
+
+(function restoreFromHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  const m = p.get("m");
+  const MODES = ["home","ftc","lineage","gen","tree","network","money","school","conflict","transfer"];
+  if (m === "school" && p.get("s") && SCHOOLS.some(s => s.id === p.get("s"))) { schoolId = p.get("s"); schoolDept = p.get("sd") || "all"; }
+  if (m === "tree" && p.get("f") && TREES[p.get("f")]) { familyId = p.get("f"); }
+  if (m === "network" && p.get("g") && byId[p.get("g")]) selected = p.get("g");
+  if (m && MODES.includes(m)) _setMode(m);
+  if (m === "tree") renderFamilyBar();
+  if (m === "network" && byId[p.get("a")] && byId[p.get("b")]) {
+    document.getElementById("path-a").value = p.get("a");
+    document.getElementById("path-b").value = p.get("b");
+    if (p.get("pm")) document.getElementById("path-mode").value = p.get("pm");
+    runPathFind();
+  }
+  if (p.get("p")) openPerson(p.get("p"));
+  _hashReady = true;
+})();
 </script>
 </body>
 </html>
