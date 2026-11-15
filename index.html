@@ -527,6 +527,21 @@
     .data-guide h3 { margin: 0 0 8px; font-size: 0.95rem; }
     .data-guide ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.88rem; color: var(--muted); }
     .data-guide strong { color: var(--text); margin-right: 6px; }
+
+    /* ===== 정·관계·언론 인물 설명 (마우스 오버 + 각주) ===== */
+    .pinfo { position: relative; border-bottom: 1px dotted currentColor; cursor: help; }
+    .pinfo sup { font-size: 0.68em; margin-left: 1px; color: var(--accent-3); font-weight: 700; }
+    .pinfo .ptip { display: none; position: absolute; left: 0; top: calc(100% + 6px); z-index: 30; width: max-content; max-width: 280px;
+      background: var(--dark); color: #fff; font-size: 0.8rem; font-weight: 500; line-height: 1.45; white-space: normal; text-align: left;
+      padding: 8px 10px; border-radius: 8px; box-shadow: var(--shadow-lg); }
+    .pinfo .ptip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); padding: 0; }
+    #ptip-float { position: fixed; z-index: 9000; max-width: 280px; background: var(--dark); color: #fff; font-size: 0.8rem; line-height: 1.45;
+      padding: 8px 10px; border-radius: 8px; box-shadow: var(--shadow-lg); pointer-events: none; }
+    #ptip-float[hidden] { display: none; }
+    .pnotes { margin: 8px 0 0; padding: 10px 14px 10px 30px; font-size: 0.8rem; color: var(--muted); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; }
+    .pnotes li { margin: 2px 0; }
+    .pnotes b { color: var(--text); }
+    .pnotes a { color: var(--muted); }
   </style>
 
 </head>
@@ -4873,6 +4888,87 @@ document.getElementById("share-btn").onclick = async () => {
   form.querySelectorAll("[data-q]").forEach(function (b) { b.onclick = function () { q.value = b.dataset.q; go(b.dataset.q); }; });
 
 })();
+</script>
+<script>
+/* 정·관계·언론 혼맥 인물 한 줄 설명. 출처: 한국어 위키백과(2026-11-15 확인) */
+const PERSON_INFO = {
+  "노태우": ["제13대 대통령. 12·12 군사반란 주도, 대통령 전 내무부 장관", "노태우"],
+  "이후락": ["박정희 정부 청와대 비서실장·중앙정보부장, 제10대 국회의원", "이후락"],
+  "서정화": ["내무부 장관(제40·61대)", "서정화_(1933년)"],
+  "김신": ["김구의 둘째 아들. 공군 출신, 교통부 장관·제9대 국회의원", "김신_(군인)"],
+  "김동조": ["외교관. 외무부 장관, 초대 주일대사, 1965년 한일회담 수석대표", "김동조"],
+  "노신영": ["외무부 장관·국무총리(제18대)", "노신영"],
+  "홍진기": ["법무부·내무부 장관을 지낸 뒤 중앙일보·동양방송 회장. 홍라희 부친", "홍진기"],
+  "김종필": ["군인 출신 정치인. 국무총리(제11·31대)", "김종필"],
+  "정일권": ["육군참모총장 출신. 외무부 장관·국무총리", "정일권"],
+  "신병현": ["경제관료. 부총리 겸 경제기획원 장관, 한국은행 총재", "신병현"],
+  "박정희": ["제5~9대 대통령", "박정희"],
+  "박상희": ["박정희의 형. 독립운동가·언론인", "박상희_(1905년)"],
+  "전두환": ["제11·12대 대통령", "전두환"],
+  "박태준": ["포항제철(현 포스코) 초대 회장, 4선 국회의원", "박태준_(1927년)"],
+  "전재용": ["전두환 전 대통령의 둘째 아들", "전재용"],
+  "이철승": ["독립운동가 출신 정치인. 신민당 대표최고위원", "이철승"],
+  "이기택": ["7~10대 국회의원(신민당), 민주당 대표최고위원", "이기택"],
+  "조윤선": ["법조인. 여성가족부·문화체육관광부 장관", "조윤선"],
+  "김세련": ["금융인. 재무부 장관, 한국은행 총재, 제9대 국회의원", "김세련"],
+  "김옥숙": ["노태우 전 대통령의 부인", "김옥숙"],
+  "김복동": ["군 출신 정치인·국회의원. 노태우 부인 김옥숙의 오빠", "김복동_(1933년)"],
+  "백지연": ["방송인. MBC 뉴스데스크 앵커(1988~1996)", "백지연"],
+  "노현정": ["전 KBS 아나운서(2003년 입사)", "노현정"],
+};
+function annotatePeople(text, used) {
+  let html = esc(text);
+  Object.keys(PERSON_INFO).sort((a, b) => b.length - a.length).forEach(name => {
+    if (!html.includes(name) || html.includes('data-p="' + name + '"')) return;
+    if (!used.includes(name)) used.push(name);
+    const n = used.indexOf(name) + 1, d = PERSON_INFO[name][0];
+    html = html.replace(name, `<span class="pinfo" tabindex="0" data-p="${name}">${name}<sup>${n}</sup><span class="ptip" role="tooltip"><b>${name}</b> · ${esc(d)}</span></span>`);
+  });
+  return html;
+}
+function personNotes(used) {
+  if (!used.length) return "";
+  return `<ol class="pnotes">${used.map(n => `<li><b>${n}</b> ${esc(PERSON_INFO[n][0])} <a href="https://ko.wikipedia.org/wiki/${encodeURI(PERSON_INFO[n][1])}" target="_blank" rel="noopener">위키백과</a></li>`).join("")}</ol>`;
+}
+function tieTable(tbodyId, rows, key, badge) {
+  const tb = document.getElementById(tbodyId);
+  if (!tb) return;
+  const used = [];
+  tb.innerHTML = rows.map(p => `<tr>
+      <td><strong>${esc(p.group)}</strong></td>
+      <td>${esc(p.people)}</td>
+      <td><span class="badge ${badge}">${annotatePeople(p[key], used)}</span></td>
+      <td>${esc(p.gen)}</td>
+      <td>${annotatePeople(p.note, used)}</td>
+    </tr>`).join("") || `<tr><td colspan="5">등록된 혼맥 없음</td></tr>`;
+  const wrap = tb.closest(".table-scroll");
+  let box = wrap.nextElementSibling;
+  if (!box || !box.classList.contains("pnotes-wrap")) { box = document.createElement("div"); box.className = "pnotes-wrap"; wrap.after(box); }
+  box.innerHTML = personNotes(used);
+}
+renderMediaTable = function () { tieTable("media-tbody", typeof MEDIA_TIES !== "undefined" ? MEDIA_TIES : [], "media", "tree"); };
+renderPoliticsTable = function () { tieTable("politics-tbody", POLITICS_TIES, "politics", "person"); renderMediaTable(); };
+const ptipFloat = document.createElement("div");
+ptipFloat.id = "ptip-float"; ptipFloat.hidden = true; ptipFloat.setAttribute("role", "tooltip");
+document.body.appendChild(ptipFloat);
+let ptipOwner = null;
+function showPtip(el) {
+  ptipOwner = el;
+  ptipFloat.innerHTML = el.querySelector(".ptip").innerHTML;
+  ptipFloat.hidden = false;
+  const r = el.getBoundingClientRect(), w = ptipFloat.offsetWidth, h = ptipFloat.offsetHeight;
+  let x = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
+  let y = r.bottom + 6; if (y + h > window.innerHeight - 8) y = r.top - h - 6;
+  ptipFloat.style.left = x + "px"; ptipFloat.style.top = y + "px";
+}
+function hidePtip() { ptipOwner = null; ptipFloat.hidden = true; }
+document.addEventListener("mouseover", e => { const t = e.target.closest(".pinfo"); if (t) showPtip(t); });
+document.addEventListener("mouseout", e => { const t = e.target.closest(".pinfo"); if (t && !t.contains(e.relatedTarget)) hidePtip(); });
+document.addEventListener("focusin", e => { const t = e.target.closest(".pinfo"); if (t) showPtip(t); });
+document.addEventListener("focusout", e => { if (e.target.closest(".pinfo")) hidePtip(); });
+document.addEventListener("click", e => { const t = e.target.closest(".pinfo"); if (!t) hidePtip(); else if (ptipOwner !== t) showPtip(t); });
+window.addEventListener("scroll", hidePtip, true);
+renderPoliticsTable();
 </script>
 </body>
 </html>
