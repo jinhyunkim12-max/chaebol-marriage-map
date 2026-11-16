@@ -1,10 +1,23 @@
 {
  "date": "2026-11-16",
- "generated_at": "2026-11-16T15:54+09:00",
+ "generated_at": "2026-11-16T16:13+09:00",
  "source": "금융감독원 전자공시시스템(DART) 오늘의 공시",
  "source_url": "https://dart.fss.or.kr/dsac001/mainAll.do",
- "total_disclosures": 1198,
+ "total_disclosures": 1475,
  "items": [
+  {
+   "time": "16:12",
+   "corp": "HLB이노베이션",
+   "corp_code": "00155586",
+   "market": "코스닥",
+   "report": "타법인주식및출자증권취득결정",
+   "correction": true,
+   "rcpNo": "20261116900977",
+   "filer": "HLB이노베이션",
+   "group": "HL",
+   "cat": "deal",
+   "owner": false
+  },
   {
    "time": "15:41",
    "corp": "진에어",
