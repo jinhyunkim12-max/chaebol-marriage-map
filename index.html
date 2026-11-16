@@ -544,6 +544,33 @@
     .pnotes a { color: var(--muted); }
     .more-pages { margin: 6px 0 0; font-weight: 600; }
     .more-pages a { text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ===== 오늘의 재벌 동향 ===== */
+    .today-panel { margin: 16px 0; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+    .today-panel.hidden { display: none; }
+    .today-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .today-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+    .today-head h3 { margin: 2px 0 4px; font-size: 1.15rem; }
+    .today-sub { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .today-groups { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
+    .today-groups button { border: 1px solid var(--line-strong); background: #fff; border-radius: 999px; padding: 4px 11px; font: 600 0.8rem var(--font); color: var(--text); cursor: pointer; }
+    .today-groups button.on { background: var(--dark); border-color: var(--dark); color: #fff; }
+    .today-groups button em { font-style: normal; color: var(--muted); margin-left: 4px; }
+    .today-groups button.on em { color: var(--brand); }
+    .today-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 10px; }
+    .today-card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--panel-2); }
+    .today-card h4 { margin: 0 0 8px; font-size: 0.92rem; display: flex; justify-content: space-between; }
+    .today-card h4 span { color: var(--muted); font-weight: 600; }
+    .today-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+    .today-card li { font-size: 0.84rem; line-height: 1.45; }
+    .today-card li a { color: var(--text); font-weight: 600; text-decoration: none; }
+    .today-card li a:hover { text-decoration: underline; }
+    .today-card .tmeta { display: block; color: var(--muted); font-size: 0.76rem; }
+    .today-card .tg { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: #EEF0F3; color: #3A4558; margin-right: 4px; }
+    .today-card .town { background: var(--brand); color: var(--dark); border: 0; border-radius: 4px; font: 700 0.7rem var(--font); padding: 1px 6px; cursor: pointer; }
+    .today-card .tfix { color: var(--danger); font-size: 0.7rem; font-weight: 700; margin-left: 4px; }
+    .today-empty { color: var(--muted); font-size: 0.82rem; }
+    .today-note { margin: 12px 0 0; font-size: 0.76rem; color: var(--faint); }
   </style>
 
 </head>
@@ -624,6 +651,19 @@
             </div>
           </form>
         </div>
+        <section class="today-panel hidden" id="today-panel" aria-labelledby="today-title">
+          <div class="today-head">
+            <div>
+              <div class="today-kicker">DAILY · DART 공시</div>
+              <h3 id="today-title">오늘의 재벌 동향</h3>
+              <p class="today-sub" id="today-sub"></p>
+            </div>
+            <select id="today-day" aria-label="날짜 선택"></select>
+          </div>
+          <div class="today-groups" id="today-groups"></div>
+          <div class="today-grid" id="today-grid"></div>
+          <p class="today-note">출처: 금융감독원 전자공시시스템(DART). 회사명 규칙으로 그룹을 판정하고 보고서명으로 분류한 자동 집계라 틀릴 수 있습니다. 내용은 각 공시 원문에서 확인하세요.</p>
+        </section>
         <div class="home-explore" id="home-explore">
           <button type="button" data-jump="gen"><strong>인물 탐색</strong><span>세대·직책·이례</span></button>
           <button type="button" data-jump="network"><strong>혼맥 네트워크</strong><span>혼인·분가·경로</span></button>
@@ -4972,6 +5012,61 @@ document.addEventListener("focusout", e => { if (e.target.closest(".pinfo")) hid
 document.addEventListener("click", e => { const t = e.target.closest(".pinfo"); if (!t) hidePtip(); else if (ptipOwner !== t) showPtip(t); });
 window.addEventListener("scroll", hidePtip, true);
 renderPoliticsTable();
+</script>
+<script>
+/* 오늘의 재벌 동향: data/today.json (GitHub Actions가 평일 저녁 DART 공시로 갱신) */
+(function () {
+  const panel = document.getElementById("today-panel");
+  if (!panel || location.protocol === "file:") return;
+  const CAT = [
+    ["stake", "오너 일가·지분 변동"],
+    ["gov", "지배구조 변동"],
+    ["deal", "투자·인수합병·재편"],
+    ["exec", "대표·임원 변동"],
+    ["biz", "소송·계약 등"],
+  ];
+  const WD = "일월화수목금토";
+  let data = null, group = "all";
+  const fmtDay = d => { const x = new Date(d + "T00:00:00+09:00"); return `${d.replaceAll("-", ".")}(${WD[x.getDay()]})`; };
+  const dartUrl = r => "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=" + r;
+  function render() {
+    const items = data.items.filter(i => group === "all" || i.group === group);
+    const counts = {};
+    data.items.forEach(i => counts[i.group] = (counts[i.group] || 0) + 1);
+    const groups = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    document.getElementById("today-sub").textContent =
+      `${fmtDay(data.date)} 공시 기준 · 전체 ${data.total_disclosures.toLocaleString()}건 중 주요 그룹 ${data.items.length}건`;
+    document.getElementById("today-groups").innerHTML =
+      `<button type="button" data-g="all" class="${group === "all" ? "on" : ""}">전체<em>${data.items.length}</em></button>` +
+      groups.map(([g, n]) => `<button type="button" data-g="${esc(g)}" class="${group === g ? "on" : ""}">${esc(g)}<em>${n}</em></button>`).join("");
+    document.getElementById("today-grid").innerHTML = CAT.map(([c, label]) => {
+      const list = items.filter(i => i.cat === c);
+      if (!list.length && (c === "exec" || c === "biz")) return "";
+      return `<div class="today-card"><h4>${label}<span>${list.length}</span></h4>${list.length ? `<ul>${list.map(i => `<li>
+          <span class="tg">${esc(i.group)}</span><a href="${dartUrl(i.rcpNo)}" target="_blank" rel="noopener">${esc(i.corp)} · ${esc(i.report)}</a>${i.correction ? '<span class="tfix">정정</span>' : ""}
+          <span class="tmeta">${esc(i.time)} · 제출 ${i.owner ? `<button type="button" class="town" data-person="${esc(i.filer)}" title="오너 일가 상세">${esc(i.filer)}</button>` : esc(i.filer)}</span>
+        </li>`).join("")}</ul>` : `<p class="today-empty">해당 공시 없음</p>`}</div>`;
+    }).join("");
+    panel.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { group = b.dataset.g; render(); });
+    panel.querySelectorAll("[data-person]").forEach(b => b.onclick = () => openPerson(b.dataset.person));
+  }
+  async function load(path) {
+    const r = await fetch(path + "?v=" + Date.now());
+    if (!r.ok) throw new Error(r.status);
+    data = await r.json(); group = "all"; render();
+    panel.classList.remove("hidden");
+  }
+  load("data/today.json").then(async () => {
+    try {
+      const days = await (await fetch("data/archive/index.json?v=" + Date.now())).json();
+      const sel = document.getElementById("today-day");
+      sel.innerHTML = days.map(d => `<option value="${d}">${fmtDay(d)}</option>`).join("");
+      sel.value = data.date;
+      sel.onchange = () => load(`data/archive/${sel.value}.json`);
+      if (days.length < 2) sel.style.display = "none";
+    } catch (e) { document.getElementById("today-day").style.display = "none"; }
+  }).catch(() => {});
+})();
 </script>
 </body>
 </html>
