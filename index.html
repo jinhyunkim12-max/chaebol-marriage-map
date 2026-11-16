@@ -5074,6 +5074,8 @@ window.addEventListener("scroll", hidePtip, true);
 renderPoliticsTable();
 </script>
 <script>
+/* 매일 바뀌는 데이터는 GitHub에서 직접 읽는다(데이터만 바뀌면 Netlify 배포를 하지 않으므로). */
+var DATA_BASE = /netlify\.app$/.test(location.hostname) ? "https://raw.githubusercontent.com/jinhyunkim12-max/chaebol-marriage-map/main/" : "";
 /* 오늘의 재벌 동향: data/today.json (GitHub Actions가 평일 저녁 DART 공시로 갱신) */
 (function () {
   const panel = document.getElementById("today-panel");
@@ -5116,13 +5118,13 @@ renderPoliticsTable();
     data = await r.json(); group = "all"; render();
     panel.classList.remove("hidden");
   }
-  load("data/today.json").then(async () => {
+  load(DATA_BASE + "data/today.json").then(async () => {
     try {
-      const days = await (await fetch("data/archive/index.json?v=" + Date.now())).json();
+      const days = await (await fetch(DATA_BASE + "data/archive/index.json?v=" + Date.now())).json();
       const sel = document.getElementById("today-day");
       sel.innerHTML = days.map(d => `<option value="${d}">${fmtDay(d)}</option>`).join("");
       sel.value = data.date;
-      sel.onchange = () => load(`data/archive/${sel.value}.json`);
+      sel.onchange = () => load(`${DATA_BASE}data/archive/${sel.value}.json`);
       if (days.length < 2) sel.style.display = "none";
     } catch (e) { document.getElementById("today-day").style.display = "none"; }
   }).catch(() => {});
@@ -5137,7 +5139,7 @@ renderPoliticsTable();
   const md = d => String(d.getUTCMonth() + 1).padStart(2, "0") + "-" + String(d.getUTCDate()).padStart(2, "0");
 
   // 오늘의 재벌 역사: 오늘 → 없으면 앞으로 14일 안의 가장 가까운 날
-  get("data/history.json").then(h => {
+  get(DATA_BASE + "data/history.json").then(h => {
     const label = { birth: "출생", death: "별세", founding: "창립", event: "" };
     const line = e => `<li><span class="hdate">${e.year}년</span> <button type="button" data-person="${esc(e.name)}">${esc(e.name)}</button> ${esc(e.role || e.group)} ${label[e.type] || ""}
       <a class="hsoon" href="${esc(e.src)}" target="_blank" rel="noopener">위키백과</a></li>`;
@@ -5157,7 +5159,7 @@ renderPoliticsTable();
   }).catch(() => {});
 
   // 재벌 순위
-  get("data/rank.json").then(r => {
+  get(DATA_BASE + "data/rank.json").then(r => {
     const fmtCap = v => v >= 1e12 ? (v / 1e12).toFixed(1) + "조" : Math.round(v / 1e8).toLocaleString() + "억";
     let k = "d1";
     const draw = () => {
@@ -5175,7 +5177,7 @@ renderPoliticsTable();
   }).catch(() => {});
 
   // 뉴스 레이더
-  get("data/news.json").then(n => {
+  get(DATA_BASE + "data/news.json").then(n => {
     if (!n.items.length) return;
     let g = "all";
     const t = s => s.slice(11, 16);
