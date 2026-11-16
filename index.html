@@ -571,6 +571,35 @@
     .today-card .tfix { color: var(--danger); font-size: 0.7rem; font-weight: 700; margin-left: 4px; }
     .today-empty { color: var(--muted); font-size: 0.82rem; }
     .today-note { margin: 12px 0 0; font-size: 0.76rem; color: var(--faint); }
+
+    /* ===== 재벌 역사 · 순위 · 뉴스 ===== */
+    .daily-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin: 16px 0; }
+    .daily-row:not(:has(.daily-card:not(.hidden))) { display: none; }
+    .daily-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+    .daily-card.hidden { display: none; }
+    .daily-card h3 { margin: 2px 0 8px; font-size: 1.1rem; }
+    .history-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .history-list li { font-size: 0.88rem; line-height: 1.5; }
+    .history-list .hdate { display: inline-block; min-width: 54px; font-weight: 700; color: var(--accent-3); }
+    .hsoon { color: var(--muted); font-size: 0.78rem; }
+    .history-list button { border: 0; background: none; padding: 0; font: 700 0.88rem var(--font); color: var(--text); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .rank-tabs { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px; overflow: hidden; margin: 6px 0 10px; }
+    .rank-tabs button { border: 0; background: #fff; padding: 4px 12px; font: 600 0.78rem var(--font); color: var(--muted); cursor: pointer; }
+    .rank-tabs button.on { background: var(--dark); color: #fff; }
+    .rank-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .rank-list li { display: grid; grid-template-columns: 24px 1fr auto auto; gap: 8px; align-items: center; font-size: 0.86rem; }
+    .rank-list .rn { font-weight: 700; color: var(--muted); text-align: right; }
+    .rank-list .rg { font-weight: 700; }
+    .rank-list .rc { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .rank-list .up { color: var(--danger); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 56px; text-align: right; }
+    .rank-list .down { color: var(--accent-3); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 56px; text-align: right; }
+    .news-top { margin: 12px 0 6px; padding-left: 20px; display: grid; gap: 6px; }
+    .news-top li, .news-list li { font-size: 0.88rem; line-height: 1.45; }
+    .news-top a, .news-list a { color: var(--text); font-weight: 600; text-decoration: none; }
+    .news-top a:hover, .news-list a:hover { text-decoration: underline; }
+    .news-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; max-height: 360px; overflow: auto; }
+    .nmeta { display: block; color: var(--muted); font-size: 0.76rem; }
+    .nmeta button { border: 0; background: #EEF0F3; border-radius: 4px; padding: 0 5px; font: 600 0.72rem var(--font); cursor: pointer; margin-left: 2px; }
   </style>
 
 </head>
@@ -663,6 +692,37 @@
           <div class="today-groups" id="today-groups"></div>
           <div class="today-grid" id="today-grid"></div>
           <p class="today-note">출처: 금융감독원 전자공시시스템(DART). 회사명 규칙으로 그룹을 판정하고 보고서명으로 분류한 자동 집계라 틀릴 수 있습니다. 내용은 각 공시 원문에서 확인하세요.</p>
+        </section>
+        <div class="daily-row">
+          <section class="daily-card hidden" id="history-panel" aria-labelledby="history-title">
+            <div class="today-kicker">ON THIS DAY</div>
+            <h3 id="history-title">오늘의 재벌 역사</h3>
+            <ul class="history-list" id="history-list"></ul>
+            <p class="today-note">출처: 한국어 위키백과(사이트 기록과 출생연도가 일치하는 인물만).</p>
+          </section>
+          <section class="daily-card hidden" id="rank-panel" aria-labelledby="rank-title">
+            <div class="today-kicker">RANKING · 시가총액</div>
+            <h3 id="rank-title">오늘의 재벌 순위</h3>
+            <p class="today-sub" id="rank-sub"></p>
+            <div class="rank-tabs" id="rank-tabs" role="group" aria-label="비교 기간">
+              <button type="button" data-k="d1" class="on">전일</button><button type="button" data-k="w1">1주</button><button type="button" data-k="m1">1개월</button>
+            </div>
+            <ol class="rank-list" id="rank-list"></ol>
+            <p class="today-note">상장 계열사 시가총액 합계(회사명 규칙으로 그룹 판정). 출처: 금융위원회 주식시세정보(공공데이터포털).</p>
+          </section>
+        </div>
+        <section class="today-panel hidden" id="news-panel" aria-labelledby="news-title">
+          <div class="today-head">
+            <div>
+              <div class="today-kicker">NEWS RADAR · 최근 24시간</div>
+              <h3 id="news-title">재벌 뉴스 레이더</h3>
+              <p class="today-sub" id="news-sub"></p>
+            </div>
+          </div>
+          <ol class="news-top" id="news-top"></ol>
+          <div class="today-groups" id="news-groups"></div>
+          <ul class="news-list" id="news-list"></ul>
+          <p class="today-note">총수 이름이 제목에 들어간 기사만 모았습니다. 제목과 링크만 보여 주며 내용은 각 언론사 원문에서 확인하세요. 출처: 네이버 뉴스 검색.</p>
         </section>
         <div class="home-explore" id="home-explore">
           <button type="button" data-jump="gen"><strong>인물 탐색</strong><span>세대·직책·이례</span></button>
@@ -5065,6 +5125,76 @@ renderPoliticsTable();
       sel.onchange = () => load(`data/archive/${sel.value}.json`);
       if (days.length < 2) sel.style.display = "none";
     } catch (e) { document.getElementById("today-day").style.display = "none"; }
+  }).catch(() => {});
+})();
+</script>
+<script>
+/* 오늘의 재벌 역사 · 재벌 순위 · 뉴스 레이더 (data/*.json, 없으면 숨김) */
+(function () {
+  if (location.protocol === "file:") return;
+  const get = p => fetch(p + "?v=" + Date.now()).then(r => { if (!r.ok) throw r.status; return r.json(); });
+  const kstNow = new Date(Date.now() + 9 * 3600e3);
+  const md = d => String(d.getUTCMonth() + 1).padStart(2, "0") + "-" + String(d.getUTCDate()).padStart(2, "0");
+
+  // 오늘의 재벌 역사: 오늘 → 없으면 앞으로 14일 안의 가장 가까운 날
+  get("data/history.json").then(h => {
+    const label = { birth: "출생", death: "별세", founding: "창립", event: "" };
+    const line = e => `<li><span class="hdate">${e.year}년</span> <button type="button" data-person="${esc(e.name)}">${esc(e.name)}</button> ${esc(e.role || e.group)} ${label[e.type] || ""}
+      <a class="hsoon" href="${esc(e.src)}" target="_blank" rel="noopener">위키백과</a></li>`;
+    let list = h.items.filter(e => e.md === md(kstNow)), head = "";
+    if (!list.length) {
+      for (let i = 1; i <= 14 && !list.length; i++) {
+        const d = new Date(kstNow.getTime() + i * 864e5);
+        list = h.items.filter(e => e.md === md(d));
+        if (list.length) head = `<li class="hsoon">오늘은 기록이 없어 ${d.getUTCMonth() + 1}월 ${d.getUTCDate()}일(${i}일 뒤)을 보여 줍니다.</li>`;
+      }
+    } else head = `<li class="hsoon">${kstNow.getUTCMonth() + 1}월 ${kstNow.getUTCDate()}일</li>`;
+    if (!list.length) return;
+    const ul = document.getElementById("history-list");
+    ul.innerHTML = head + list.map(line).join("");
+    ul.querySelectorAll("[data-person]").forEach(b => b.onclick = () => openPerson(b.dataset.person));
+    document.getElementById("history-panel").classList.remove("hidden");
+  }).catch(() => {});
+
+  // 재벌 순위
+  get("data/rank.json").then(r => {
+    const fmtCap = v => v >= 1e12 ? (v / 1e12).toFixed(1) + "조" : Math.round(v / 1e8).toLocaleString() + "억";
+    let k = "d1";
+    const draw = () => {
+      document.getElementById("rank-sub").textContent = `${r.date.replaceAll("-", ".")} 종가 기준 · 비교 ${(r.compare[k] || "-").replaceAll("-", ".")}`;
+      document.getElementById("rank-list").innerHTML = r.groups.slice(0, 15).map(g => {
+        const c = g[k];
+        const chg = c == null ? `<span class="rc">-</span>` : `<span class="${c >= 0 ? "up" : "down"}">${c >= 0 ? "▲" : "▼"}${Math.abs(c).toFixed(1)}%</span>`;
+        return `<li title="${esc(g.top.map(t => t.name).join(", "))}"><span class="rn">${g.rank}</span><span class="rg">${esc(g.group)}</span><span class="rc">${fmtCap(g.cap)}</span>${chg}</li>`;
+      }).join("");
+      document.querySelectorAll("#rank-tabs button").forEach(b => b.classList.toggle("on", b.dataset.k === k));
+    };
+    document.querySelectorAll("#rank-tabs button").forEach(b => b.onclick = () => { k = b.dataset.k; draw(); });
+    draw();
+    document.getElementById("rank-panel").classList.remove("hidden");
+  }).catch(() => {});
+
+  // 뉴스 레이더
+  get("data/news.json").then(n => {
+    if (!n.items.length) return;
+    let g = "all";
+    const t = s => s.slice(11, 16);
+    const meta = i => `<span class="nmeta">${esc(i.press)} · ${t(i.time)} · ${esc(i.group)}${i.people.map(p => `<button type="button" data-person="${esc(p)}">${esc(p)}</button>`).join("")}</span>`;
+    const link = i => `<a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}</a>`;
+    const counts = {};
+    n.items.forEach(i => counts[i.group] = (counts[i.group] || 0) + 1);
+    const panel = document.getElementById("news-panel");
+    const draw = () => {
+      document.getElementById("news-groups").innerHTML = `<button type="button" data-g="all" class="${g === "all" ? "on" : ""}">전체<em>${n.items.length}</em></button>` +
+        Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<button type="button" data-g="${esc(k)}" class="${g === k ? "on" : ""}">${esc(k)}<em>${v}</em></button>`).join("");
+      document.getElementById("news-list").innerHTML = n.items.filter(i => g === "all" || i.group === g).map(i => `<li>${link(i)}${meta(i)}</li>`).join("");
+      panel.querySelectorAll("[data-g]").forEach(b => b.onclick = () => { g = b.dataset.g; draw(); });
+      panel.querySelectorAll("[data-person]").forEach(b => b.onclick = () => openPerson(b.dataset.person));
+    };
+    document.getElementById("news-sub").textContent = `${n.generated_at.slice(0, 16).replace("T", " ")} 기준 · ${n.items.length}건`;
+    document.getElementById("news-top").innerHTML = n.top.map(i => `<li>${link(i)}${i.dup > 1 ? ` <span class="hsoon">외 ${i.dup - 1}건</span>` : ""}${meta(i)}</li>`).join("");
+    draw();
+    panel.classList.remove("hidden");
   }).catch(() => {});
 })();
 </script>

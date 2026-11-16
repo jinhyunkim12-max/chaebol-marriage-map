@@ -1,0 +1,249 @@
+{
+ "source": "한국어 위키백과(출생연도가 사이트 기록과 일치하는 인물만)",
+ "count": 27,
+ "items": [
+  {
+   "md": "01-09",
+   "year": 1942,
+   "type": "birth",
+   "name": "이건희",
+   "group": "삼성",
+   "role": "삼성전자 선대회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EA%B1%B4%ED%9D%AC"
+  },
+  {
+   "md": "01-23",
+   "year": 1978,
+   "type": "birth",
+   "name": "구광모",
+   "group": "LG",
+   "role": "LG 회장 · (주)LG 대표이사",
+   "src": "https://ko.wikipedia.org/wiki/%EA%B5%AC%EA%B4%91%EB%AA%A8"
+  },
+  {
+   "md": "02-07",
+   "year": 1952,
+   "type": "birth",
+   "name": "김승연",
+   "group": "한화",
+   "role": "한화그룹 회장 · 동일인",
+   "src": "https://ko.wikipedia.org/wiki/%EA%B9%80%EC%8A%B9%EC%97%B0"
+  },
+  {
+   "md": "02-12",
+   "year": 1910,
+   "type": "birth",
+   "name": "이병철",
+   "group": "삼성",
+   "role": "삼성 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%B3%91%EC%B2%A0"
+  },
+  {
+   "md": "02-14",
+   "year": 1955,
+   "type": "birth",
+   "name": "신동빈",
+   "group": "롯데",
+   "role": "롯데그룹 회장 · 롯데지주 대표이사",
+   "src": "https://ko.wikipedia.org/wiki/%EC%8B%A0%EB%8F%99%EB%B9%88"
+  },
+  {
+   "md": "03-21",
+   "year": 2001,
+   "type": "death",
+   "name": "정주영",
+   "group": "현대",
+   "role": "현대그룹 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%A3%BC%EC%98%81"
+  },
+  {
+   "md": "03-30",
+   "year": 1986,
+   "type": "birth",
+   "name": "신유열",
+   "group": "롯데",
+   "role": "롯데지주 부사장 · 롯데바이오로직스 대표이사",
+   "src": "https://ko.wikipedia.org/wiki/%EC%8B%A0%EC%9C%A0%EC%97%B4"
+  },
+  {
+   "md": "04-19",
+   "year": 1938,
+   "type": "birth",
+   "name": "정몽구",
+   "group": "현대차",
+   "role": "현대차그룹 명예회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EB%AA%BD%EA%B5%AC"
+  },
+  {
+   "md": "05-03",
+   "year": 1982,
+   "type": "birth",
+   "name": "정기선",
+   "group": "HD현대",
+   "role": "HD현대 회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EA%B8%B0%EC%84%A0"
+  },
+  {
+   "md": "06-20",
+   "year": 1931,
+   "type": "birth",
+   "name": "이맹희",
+   "group": "CJ",
+   "role": "CJ 명예회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%A7%B9%ED%9D%AC"
+  },
+  {
+   "md": "06-23",
+   "year": 1968,
+   "type": "birth",
+   "name": "이재용",
+   "group": "삼성",
+   "role": "삼성전자 회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%9E%AC%EC%9A%A9"
+  },
+  {
+   "md": "08-14",
+   "year": 2015,
+   "type": "death",
+   "name": "이맹희",
+   "group": "CJ",
+   "role": "CJ 명예회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%A7%B9%ED%9D%AC"
+  },
+  {
+   "md": "08-27",
+   "year": 1907,
+   "type": "birth",
+   "name": "구인회",
+   "group": "LG",
+   "role": "LG 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EA%B5%AC%EC%9D%B8%ED%9A%8C_(%EA%B8%B0%EC%97%85%EC%9D%B8)"
+  },
+  {
+   "md": "09-05",
+   "year": 1943,
+   "type": "birth",
+   "name": "이명희",
+   "group": "신세계",
+   "role": "신세계 총괄회장 · 공정위 동일인",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%AA%85%ED%9D%AC_(1943%EB%85%84)"
+  },
+  {
+   "md": "09-19",
+   "year": 1968,
+   "type": "birth",
+   "name": "정용진",
+   "group": "신세계",
+   "role": "신세계그룹 회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9A%A9%EC%A7%84"
+  },
+  {
+   "md": "09-20",
+   "year": 1973,
+   "type": "birth",
+   "name": "이서현",
+   "group": "삼성",
+   "role": "삼성복지재단 이사장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%84%9C%ED%98%84_(1973%EB%85%84)"
+  },
+  {
+   "md": "10-05",
+   "year": 1972,
+   "type": "birth",
+   "name": "정유경",
+   "group": "신세계",
+   "role": "신세계 회장(백화점·면세 등)",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9C%A0%EA%B2%BD_(%EA%B8%B0%EC%97%85%EC%9D%B8)"
+  },
+  {
+   "md": "10-06",
+   "year": 1970,
+   "type": "birth",
+   "name": "이부진",
+   "group": "삼성",
+   "role": "호텔신라 사장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%B6%80%EC%A7%84"
+  },
+  {
+   "md": "10-18",
+   "year": 1970,
+   "type": "birth",
+   "name": "정의선",
+   "group": "현대차",
+   "role": "현대자동차그룹 회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%9D%98%EC%84%A0"
+  },
+  {
+   "md": "10-23",
+   "year": 1960,
+   "type": "birth",
+   "name": "이재현",
+   "group": "CJ",
+   "role": "CJ그룹 회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%9E%AC%ED%98%84_(1960%EB%85%84)"
+  },
+  {
+   "md": "10-25",
+   "year": 2020,
+   "type": "death",
+   "name": "이건희",
+   "group": "삼성",
+   "role": "삼성전자 선대회장",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EA%B1%B4%ED%9D%AC"
+  },
+  {
+   "md": "10-31",
+   "year": 1983,
+   "type": "birth",
+   "name": "김동관",
+   "group": "한화",
+   "role": "한화그룹 수석부회장 · 한화에어로스페이스 등",
+   "src": "https://ko.wikipedia.org/wiki/%EA%B9%80%EB%8F%99%EA%B4%80_(1983%EB%85%84)"
+  },
+  {
+   "md": "11-15",
+   "year": 1951,
+   "type": "birth",
+   "name": "정몽준",
+   "group": "HD현대",
+   "role": "아산재단 이사장 · HD현대 동일인",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EB%AA%BD%EC%A4%80"
+  },
+  {
+   "md": "11-19",
+   "year": 1987,
+   "type": "death",
+   "name": "이병철",
+   "group": "삼성",
+   "role": "삼성 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%B3%91%EC%B2%A0"
+  },
+  {
+   "md": "11-25",
+   "year": 1915,
+   "type": "birth",
+   "name": "정주영",
+   "group": "현대",
+   "role": "현대그룹 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EC%A0%95%EC%A3%BC%EC%98%81"
+  },
+  {
+   "md": "12-03",
+   "year": 1960,
+   "type": "birth",
+   "name": "최태원",
+   "group": "SK",
+   "role": "SK그룹 회장 · 동일인",
+   "src": "https://ko.wikipedia.org/wiki/%EC%B5%9C%ED%83%9C%EC%9B%90_(1960%EB%85%84)"
+  },
+  {
+   "md": "12-31",
+   "year": 1969,
+   "type": "death",
+   "name": "구인회",
+   "group": "LG",
+   "role": "LG 창업주",
+   "src": "https://ko.wikipedia.org/wiki/%EA%B5%AC%EC%9D%B8%ED%9A%8C_(%EA%B8%B0%EC%97%85%EC%9D%B8)"
+  }
+ ]
+}

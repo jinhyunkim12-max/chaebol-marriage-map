@@ -25,6 +25,15 @@ jobs:
           python-version: "3.12"
       - name: DART 공시 수집
         run: python tools/update_today.py
+      - name: 재벌 순위(시가총액) — DATA_GO_KR_KEY 있을 때만
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+        run: python tools/update_rank.py || echo "순위 갱신 실패(다음 실행에서 다시 시도)"
+      - name: 재벌 뉴스 레이더 — NAVER 키 있을 때만
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+        run: python tools/update_news.py || echo "뉴스 갱신 실패(다음 실행에서 다시 시도)"
       - name: 바뀐 내용 커밋
         run: |
           if git diff --quiet -- data; then
