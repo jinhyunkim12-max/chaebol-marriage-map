@@ -1,10 +1,23 @@
 {
  "date": "2026-11-16",
- "generated_at": "2026-11-16T14:09+09:00",
+ "generated_at": "2026-11-16T15:54+09:00",
  "source": "금융감독원 전자공시시스템(DART) 오늘의 공시",
  "source_url": "https://dart.fss.or.kr/dsac001/mainAll.do",
- "total_disclosures": 526,
+ "total_disclosures": 1198,
  "items": [
+  {
+   "time": "15:41",
+   "corp": "진에어",
+   "corp_code": "00653024",
+   "market": "유가",
+   "report": "주요사항보고서(회사합병결정)",
+   "correction": true,
+   "rcpNo": "20261116000892",
+   "filer": "진에어",
+   "group": "한진",
+   "cat": "gov",
+   "owner": false
+  },
   {
    "time": "14:07",
    "corp": "대우건설",
