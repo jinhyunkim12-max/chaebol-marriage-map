@@ -1,8 +1,113 @@
 {
  "date": "2026-11-17",
- "generated_at": "2026-11-17T08:17+09:00",
+ "generated_at": "2026-11-18T04:21+09:00",
  "source": "금융감독원 전자공시시스템(DART) 오늘의 공시",
  "source_url": "https://dart.fss.or.kr/dsac001/mainAll.do",
- "total_disclosures": 7,
- "items": []
+ "total_disclosures": 377,
+ "items": [
+  {
+   "time": "17:18",
+   "corp": "코오롱",
+   "corp_code": "00152862",
+   "market": "유가",
+   "report": "주식등의대량보유상황보고서(일반)",
+   "correction": false,
+   "rcpNo": "20261117000237",
+   "filer": "이웅열",
+   "group": "코오롱",
+   "cat": "stake",
+   "owner": false
+  },
+  {
+   "time": "16:30",
+   "corp": "현대로템",
+   "corp_code": "00302926",
+   "market": "유가",
+   "report": "단일판매ㆍ공급계약체결",
+   "correction": true,
+   "rcpNo": "20261117800497",
+   "filer": "현대로템",
+   "group": "현대자동차",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "15:47",
+   "corp": "코오롱",
+   "corp_code": "00152862",
+   "market": "유가",
+   "report": "단일판매ㆍ공급계약체결(자회사의 주요경영사항)",
+   "correction": false,
+   "rcpNo": "20261117800384",
+   "filer": "코오롱",
+   "group": "코오롱",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "15:35",
+   "corp": "코오롱글로벌",
+   "corp_code": "00152880",
+   "market": "유가",
+   "report": "단일판매ㆍ공급계약체결",
+   "correction": false,
+   "rcpNo": "20261117800374",
+   "filer": "코오롱글로벌",
+   "group": "코오롱",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "14:16",
+   "corp": "금호석유화학",
+   "corp_code": "00106368",
+   "market": "유가",
+   "report": "최대주주등소유주식변동신고서",
+   "correction": false,
+   "rcpNo": "20261117800304",
+   "filer": "금호석유화학",
+   "group": "금호석유화학",
+   "cat": "stake",
+   "owner": false
+  },
+  {
+   "time": "09:23",
+   "corp": "아모레퍼시픽",
+   "corp_code": "00583424",
+   "market": "유가",
+   "report": "수시공시의무관련사항(공정공시)",
+   "correction": false,
+   "rcpNo": "20261117800115",
+   "filer": "아모레퍼시픽",
+   "group": "아모레퍼시픽",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "09:23",
+   "corp": "아모레퍼시픽홀딩스",
+   "corp_code": "00154462",
+   "market": "유가",
+   "report": "수시공시의무관련사항(공정공시)",
+   "correction": false,
+   "rcpNo": "20261117800135",
+   "filer": "아모레퍼시픽홀딩스",
+   "group": "아모레퍼시픽",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "09:04",
+   "corp": "제일기획",
+   "corp_code": "00148276",
+   "market": "유가",
+   "report": "자기주식취득결과보고서",
+   "correction": false,
+   "rcpNo": "20261117000007",
+   "filer": "제일기획",
+   "group": "삼성",
+   "cat": "gov",
+   "owner": false
+  }
+ ]
 }
