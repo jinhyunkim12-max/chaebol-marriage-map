@@ -1,0 +1,61 @@
+{
+ "date": "2026-11-24",
+ "generated_at": "2026-11-24T10:33+09:00",
+ "source": "금융감독원 전자공시시스템(DART) 오늘의 공시",
+ "source_url": "https://dart.fss.or.kr/dsac001/mainAll.do",
+ "total_disclosures": 125,
+ "items": [
+  {
+   "time": "09:15",
+   "corp": "삼성E&A",
+   "corp_code": "00126308",
+   "market": "유가",
+   "report": "단일판매ㆍ공급계약체결",
+   "correction": false,
+   "rcpNo": "20261124800292",
+   "filer": "삼성E&A",
+   "group": "삼성",
+   "cat": "biz",
+   "owner": false
+  },
+  {
+   "time": "09:05",
+   "corp": "제일기획",
+   "corp_code": "00148276",
+   "market": "유가",
+   "report": "주요사항보고서(자기주식취득결정)",
+   "correction": false,
+   "rcpNo": "20261124000020",
+   "filer": "제일기획",
+   "group": "삼성",
+   "cat": "gov",
+   "owner": false
+  },
+  {
+   "time": "09:05",
+   "corp": "HD현대마린솔루션",
+   "corp_code": "01194689",
+   "market": "유가",
+   "report": "최대주주등소유주식변동신고서",
+   "correction": false,
+   "rcpNo": "20261124800288",
+   "filer": "HD현대마린솔루션",
+   "group": "HD현대",
+   "cat": "stake",
+   "owner": false
+  },
+  {
+   "time": "08:45",
+   "corp": "제일기획",
+   "corp_code": "00148276",
+   "market": "유가",
+   "report": "수시공시의무관련사항(공정공시)",
+   "correction": true,
+   "rcpNo": "20261124800212",
+   "filer": "제일기획",
+   "group": "삼성",
+   "cat": "biz",
+   "owner": false
+  }
+ ]
+}
